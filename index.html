@@ -1,51 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mama's Tortas - Order Lunch</title>
+    <title>Tortas de la Mimi - Pide tu lonche</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Mimi's Tortas</h1>
-        <p>Ordena el desayuno de tu hijo para mañana!</p>
+        <h1>Tortas de la Mimi</h1>
+        <p>¡Arma el lonche de tu pequeño pa’ mañana, qué show!</p>
     </header>
 
     <main>
         <section id="menu">
-            <h2>Menu</h2>
-            <div class="item">
-                <h3>Torta de jamón - $18 MXN</h3>
-                <img src="images/torta.jpeg" alt="Torta de jamón" width="200">
-                <p>Jamón, queso, aguacate.</p>
-                <label><input type="checkbox" class="item-checkbox" data-price="18" data-name="Classic Torta"> Añadir algo más</label>
-                <p>Extras: <label><input type="checkbox" class="extra" data-price="5"> Queso extra (+5)</label></p>
+            <h2>¿Qué te echamos?</h2>
+            <div class="menu-grid">
+                <div class="item">
+                    <img src="images/torta.jpeg" alt="Torta de jamón">
+                    <h3>Torta de Jamón - $18 varos</h3>
+                    <p>Jamón, queso Oaxaca, aguacate bien chido.</p>
+                    <label><input type="checkbox" class="item-checkbox" data-price="18" data-name="Torta de Jamón"> Échale al carrito</label>
+                    <p>Extras: <label><input type="checkbox" class="extra" data-price="5"> Queso extra (+5 varos)</label></p>
+                </div>
+                <div class="item">
+                    <img src="images/fruta.jpeg" alt="Fruta fresca">
+                    <h3>Fruta Fresca - $20 varos</h3>
+                    <p>Toper de fruta de temporada, pa’l antojo.</p>
+                    <label><input type="checkbox" class="item-checkbox" data-price="20" data-name="Fruta Fresca"> Échale al carrito</label>
+                </div>
+                <!-- Agrega más tortas aquí, compa -->
             </div>
-            <div class="item">
-                <h3>Fruta fresca - $20 MXN</h3>
-                <img src="images/fruta.jpeg" alt="Fruta fresca" width="200">
-                <p>Toper de fruta.</p>
-                <label><input type="checkbox" class="item-checkbox" data-price="20" data-name="Fruta fresca"> Añadir algo más</label>
-            </div>
-            <!-- Puedes agregar más cosas aquí -->
         </section>
 
         <section id="order-form">
-    <h2>Place Your Order</h2>
-    <p>Click below to order:</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkr5y8ND2vcdmTLAEbWUyWiTfgU78i79-5MBTz-XpR956zg/viewform?usp=header" target="_blank">Open Order Form</a>
-</section>
+            <h2>Arma tu pedido</h2>
+            <p>Da clic pa’ pedir, ¡es bien fácil!</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBkr5y8ND2vcdmTLAEbWUyWiTfgU78i79-5MBTz-XpR956zg/viewform?usp=header" target="_blank" class="btn">Apedir el lonche</a>
+        </section>
 
         <section id="whatsapp">
-            <h2>Join Us!</h2>
-            <p>Questions or special orders? Join our WhatsApp group!</p>
-            <a href="[Your WhatsApp Link]">Join WhatsApp</a>
+            <h2>Échate un clavado al Whats</h2>
+            <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
+            <a href="[Your WhatsApp Link]" class="btn btn-whatsapp">Cáele al WhatsApp</a>
+        </section>
+
+        <section id="qr-code">
+            <h2>Escanea pa’l pedido</h2>
+            <img src="images/qr-code.png" alt="Código QR" width="150">
+            <p>¡Pásale el link a la banda!</p>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 Mama's Tortas | Naucalpan de Juárez</p>
+        <p>© 2025 Tortas de la Mimi | Naucalpan de Juárez, puro amor mexicano</p>
     </footer>
 
     <script src="script.js"></script>
