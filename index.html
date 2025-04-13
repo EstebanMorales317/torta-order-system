@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama's Tortas - Order Lunch</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mama's Tortas</h1>
+        <p>Order your kid's lunch for tomorrow!</p>
+    </header>
+
+    <main>
+        <section id="menu">
+            <h2>Menu</h2>
+            <div class="item">
+                <h3>Classic Torta - $50 MXN</h3>
+                <img src="images/torta.jpg" alt="Classic Torta" width="200">
+                <p>Ham, cheese, avocado.</p>
+                <label><input type="checkbox" class="item-checkbox" data-price="50" data-name="Classic Torta"> Add to Order</label>
+                <p>Extras: <label><input type="checkbox" class="extra" data-price="10"> Extra Cheese (+$10)</label></p>
+            </div>
+            <div class="item">
+                <h3>Fresh Fruit - $20 MXN</h3>
+                <img src="images/fruit.jpg" alt="Fresh Fruit" width="200">
+                <p>Seasonal fruit cup.</p>
+                <label><input type="checkbox" class="item-checkbox" data-price="20" data-name="Fresh Fruit"> Add to Order</label>
+            </div>
+            <!-- You can add more items here -->
+        </section>
+
+        <section id="order-form">
+            <h2>Place Your Order</h2>
+            <form id="orderForm">
+                <label for="name">Parent's Name:</label><br>
+                <input type="text" id="name" required><br><br>
+
+                <label for="pickup-time">Pickup Time:</label><br>
+                <select id="pickup-time" required>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="7:30 AM">7:30 AM</option>
+                </select><br><br>
+
+                <label for="payment">Payment:</label><br>
+                <select id="payment" required>
+                    <option value="cash">Cash on Delivery</option>
+                    <option value="transfer">Bank Transfer</option>
+                </select><br><br>
+
+                <div id="bank-details" style="display: none;">
+                    <p>Bank: [Your Bank Name]<br>Account: [Your Account Number]<br>CLABE: [Your CLABE]</p>
+                </div>
+
+                <button type="submit">Submit Order</button>
+            </form>
+        </section>
+
+        <section id="whatsapp">
+            <h2>Join Us!</h2>
+            <p>Questions or special orders? Join our WhatsApp group!</p>
+            <a href="[Your WhatsApp Link]">Join WhatsApp</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Mama's Tortas | Naucalpan de Juárez</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
