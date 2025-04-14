@@ -14,7 +14,7 @@ header {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
     color: white;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 1rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
@@ -22,55 +22,65 @@ header {
 }
 
 header h1 {
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    font-size: 2rem;
 }
 
 header p {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 #bolsita {
-    margin-top: 1rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    display: inline-flex;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: #e74c3c;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    color: #2c3e50;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    z-index: 101;
+    transition: transform 0.2s;
+}
+
+#bolsita.pulse {
+    animation: pulse 0.3s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 .bolsita-icon {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
-.bolsita-icon.shake {
-    animation: shake 0.3s;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+#bolsita-count, #bolsita-total {
+    font-size: 0.8rem;
+    line-height: 1.2;
 }
 
 main {
     padding: 1rem;
+    margin-top: 4rem; /* Space for sticky header */
 }
 
 .menu-section {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
 }
 
 .menu-section h2 {
     color: #e74c3c;
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: center;
-    margin-bottom: 1rem;
-    animation: slideIn 0.5s;
+    margin-bottom: 0.8rem;
+    animation: slideInSection 0.5s;
 }
 
 #meals {
@@ -89,28 +99,28 @@ main {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.8rem;
+    padding: 0.8rem;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
 
 .menu-scroll::-webkit-scrollbar {
-    height: 8px;
+    height: 6px;
 }
 
 .menu-scroll::-webkit-scrollbar-thumb {
     background: #e74c3c;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .item {
-    flex: 0 0 250px;
+    flex: 0 0 200px;
     background: white;
-    border-radius: 15px;
-    padding: 1rem;
+    border-radius: 12px;
+    padding: 0.8rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     scroll-snap-align: center;
     transition: transform 0.3s;
 }
@@ -121,37 +131,37 @@ main {
 
 .item img {
     width: 100%;
-    height: 180px;
+    height: 140px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 0.4rem;
 }
 
 .item h3 {
     color: #2c3e50;
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
 }
 
 .item p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #7f8c8d;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .custom-checkbox {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #e74c3c;
 }
 
 .custom-checkbox input {
     appearance: none;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border: 2px solid #e74c3c;
     border-radius: 4px;
     position: relative;
@@ -168,38 +178,38 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 12px;
+    font-size: 10px;
 }
 
 #order-form {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     text-align: center;
 }
 
 #order-form form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-width: 500px;
+    gap: 0.8rem;
+    max-width: 90%;
     margin: 0 auto;
     background: white;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 #order-form label {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #2c3e50;
     text-align: left;
 }
 
 #order-form input,
 #order-form select {
-    padding: 0.7rem;
-    font-size: 1rem;
+    padding: 0.6rem;
+    font-size: 0.9rem;
     border: 2px solid #dfe6e9;
-    border-radius: 8px;
+    border-radius: 6px;
     outline: none;
 }
 
@@ -209,18 +219,18 @@ main {
 }
 
 #bank-details {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
     color: #7f8c8d;
 }
 
 .btn {
     background: #e74c3c;
     color: white;
-    padding: 0.8rem 1.5rem;
+    padding: 0.7rem 1.2rem;
     border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    border-radius: 6px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
 }
@@ -244,21 +254,21 @@ main {
 }
 
 #whatsapp, #qr-code {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     text-align: center;
 }
 
 #qr-code img {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 footer {
     background: #2c3e50;
     color: white;
     text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+    padding: 0.8rem;
+    margin-top: 1.5rem;
 }
 
 .modal {
@@ -277,8 +287,8 @@ footer {
 
 .modal-content {
     background: white;
-    padding: 1.5rem;
-    border-radius: 15px;
+    padding: 1rem;
+    border-radius: 12px;
     text-align: center;
     max-width: 90%;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -288,9 +298,9 @@ footer {
 
 .close {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
+    top: 8px;
+    right: 12px;
+    font-size: 1.2rem;
     cursor: pointer;
     color: #2c3e50;
 }
@@ -310,19 +320,33 @@ footer {
 }
 
 @media (max-width: 768px) {
+    header {
+        padding: 0.8rem;
+    }
+
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     header p {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .item {
-        flex: 0 0 200px;
+        flex: 0 0 180px;
     }
 
     .item img {
-        height: 150px;
+        height: 120px;
+    }
+
+    #bolsita {
+        width: 50px;
+        height: 50px;
+        font-size: 0.8rem;
+    }
+
+    .bolsita-icon {
+        font-size: 1rem;
     }
 }
