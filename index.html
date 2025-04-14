@@ -14,7 +14,7 @@
         <div id="bolsita">
             <span class="bolsita-icon">🛍️</span>
             <span id="bolsita-count">0</span>
-            <span id="bolsita-total">0</span>
+            <span id="bolsita-total">$0</span>
         </div>
     </header>
 
@@ -145,7 +145,39 @@
             </div>
         </section>
 
-        <section id="order-form">
+        <section id="whatsapp">
+            <h2>Échate un clavado al Whats</h2>
+            <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
+            <a href="https://wa.me/1234567890" class="btn btn-whatsapp">Cáele al WhatsApp</a>
+        </section>
+
+        <section id="qr-code">
+            <h2>Escanea pa’l pedido</h2>
+            <img src="images/QR.webp" alt="Código QR" width="150">
+            <p>¡Pásale el link a la banda!</p>
+        </section>
+
+        <button id="order-btn" class="btn order-btn">¡Échale el Lonche!</button>
+    </main>
+
+    <footer>
+        <p>© 2025 Tortas de la Mimi | Naucalpan de Juárez, puro amor mexicano</p>
+    </footer>
+
+    <!-- Order Preview Modal -->
+    <div id="order-preview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Tu Bolsita de Lonche</h2>
+            <p id="preview-items">Aún no hay nada en la bolsita</p>
+            <p id="preview-total">Total: $0 MXN</p>
+        </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div id="order-form-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
             <h2>Arma tu pedido</h2>
             <form id="custom-order-form">
                 <label for="parent-name">Tu nombre:</label>
@@ -160,7 +192,13 @@
                     <option value="7:30 AM">7:30 AM</option>
                     <option value="8:00 AM">8:00 AM</option>
                     <option value="8:30 AM">8:30 AM</option>
+                    <option value="custom">Establecer otro horario</option>
                 </select>
+
+                <div id="custom-time" style="display: none;">
+                    <label for="custom-time-input">Especifica la hora:</label>
+                    <input type="text" id="custom-time-input" placeholder="Ej. 9:00 AM">
+                </div>
 
                 <label for="payment">Método de pago:</label>
                 <select id="payment" required>
@@ -175,25 +213,10 @@
 
                 <button type="submit" class="btn" id="submit-btn">¡Apedir el lonche!</button>
             </form>
-        </section>
+        </div>
+    </div>
 
-        <section id="whatsapp">
-            <h2>Échate un clavado al Whats</h2>
-            <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
-            <a href="https://wa.me/1234567890" class="btn btn-whatsapp">Cáele al WhatsApp</a>
-        </section>
-
-        <section id="qr-code">
-            <h2>Escanea pa’l pedido</h2>
-            <img src="images/QR.webp" alt="Código QR" width="150">
-            <p>¡Pásale el link a la banda!</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 Tortas de la Mimi | Naucalpan de Juárez, puro amor mexicano</p>
-    </footer>
-
+    <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
