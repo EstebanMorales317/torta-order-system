@@ -6,7 +6,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom, #fff8e1, #fff3e0);
+    background: linear-gradient(to bottom, #fff8e1, #fff3e0), url('images/tortilla-pattern.png') repeat;
+    background-size: 200px;
     color: #2c3e50;
 }
 
@@ -41,7 +42,7 @@ h2 {
 }
 
 #cart-preview {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -103,10 +104,38 @@ h2 {
     margin-bottom: 1rem;
 }
 
-.item label {
+/* Custom checkbox */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     cursor: pointer;
     font-size: 1rem;
     color: #e74c3c;
+}
+
+.custom-checkbox input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e74c3c;
+    border-radius: 4px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.custom-checkbox input:checked {
+    background: #e74c3c;
+}
+
+.custom-checkbox input:checked::after {
+    content: '✔';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
 }
 
 #order-form {
@@ -120,7 +149,7 @@ h2 {
     gap: 1.2rem;
     max-width: 500px;
     margin: 0 auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -161,14 +190,41 @@ h2 {
     text-decoration: none;
     border-radius: 8px;
     font-size: 1.2rem;
-    transition: background 0.3s, transform 0.2s;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     cursor: pointer;
     border: none;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn:hover {
     background: #c0392b;
     transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:disabled {
+    background: #7f8c8d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
 }
 
 .btn-whatsapp {
@@ -209,6 +265,7 @@ footer {
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    animation: fadeIn 0.3s;
 }
 
 .modal-content {
@@ -218,7 +275,8 @@ footer {
     text-align: center;
     max-width: 500px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    position: relative;
+    transform: translateY(-50px);
+    animation: slideIn 0.3s forwards;
 }
 
 .close {
@@ -230,9 +288,13 @@ footer {
     color: #2c3e50;
 }
 
+@keyframes slideIn {
+    to { transform: translateY(0); }
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .item {
