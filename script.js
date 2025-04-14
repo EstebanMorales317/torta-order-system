@@ -62,15 +62,15 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
 
     // Google Forms integration (replace with your form's action URL and field names)
     const formData = new FormData();
-    formData.append('entry.1234567890', parentName); // Replace with your Google Form field ID
-    formData.append('entry.0987654321', kidName);   // Replace with your Google Form field ID
-    formData.append('entry.1122334455', pickupTime); // Replace with your Google Form field ID
-    formData.append('entry.5566778899', payment);    // Replace with your Google Form field ID
-    formData.append('entry.6677889900', items.join(', ')); // Replace with your Google Form field ID
-    formData.append('entry.7788990011', total);      // Replace with your Google Form field ID
+    formData.append('entry.1069885003', parentName); // Replace with your Google Form field ID
+    formData.append('entry.1194295238', kidName);   // Replace with your Google Form field ID
+    formData.append('entry.1139898634', pickupTime); // Replace with your Google Form field ID
+    formData.append('entry.1652796924', payment);    // Replace with your Google Form field ID
+    formData.append('entry.174677996', items.join(', ')); // Replace with your Google Form field ID
+    formData.append('entry.53053903', total);      // Replace with your Google Form field ID
 
     try {
-        await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSfBkr5y8ND2vcdmTLAEbWUyWiTfgU78i79-5MBTz-XpR956zg/formResponse', {
+        await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
             mode: 'no-cors',
             body: formData
