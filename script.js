@@ -91,6 +91,12 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
+        confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+    colors: ['#e74c3c', '#2ecc71', '#f1c40f']
+});
 
         // Reset form and cart
         this.reset();
