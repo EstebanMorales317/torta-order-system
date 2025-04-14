@@ -400,3 +400,16 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+.logo {
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    height: auto;
+    padding-top: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
