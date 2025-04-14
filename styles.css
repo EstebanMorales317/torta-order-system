@@ -187,7 +187,7 @@ main {
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    background: #e74c3c;
+    background: #7f8c8d; /* Disabled by default */
     color: white;
     padding: 0.8rem 2rem;
     border: none;
@@ -198,9 +198,13 @@ main {
     transition: background 0.3s, transform 0.2s;
 }
 
-.order-btn:hover {
-    background: #c0392b;
+.order-btn:not(:disabled):hover {
+    background: #27ae60;
     transform: translateX(-50%) translateY(-2px);
+}
+
+.order-btn:disabled {
+    cursor: not-allowed;
 }
 
 .btn {
@@ -315,6 +319,35 @@ footer {
     font-size: 1.2rem;
     cursor: pointer;
     color: #2c3e50;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dfe6e9;
+}
+
+.quantity-controls {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.qty-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.qty-btn:hover {
+    background: #c0392b;
 }
 
 @keyframes slideIn {
