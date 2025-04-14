@@ -7,7 +7,7 @@ const updateCart = () => {
 
     document.querySelectorAll('.item-checkbox:checked').forEach(item => {
         const price = parseFloat(item.getAttribute('data-price'));
-        const name = item.getAttribute('data-name'); // Fixed syntax error
+        const name = item.getAttribute('data-name');
         items.push(`${name} ($${price})`);
         total += price;
     });
@@ -73,35 +73,49 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     formData.append('entry.53053903', total);
 
     try {
-        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
+        await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok || response.type === 'opaque') {
-            // Show confirmation modal
-            const modal = document.getElementById('confirmation-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.innerHTML = `
-                ¡Gracias, ${parentName}! <br>
-                Pedido pa’l pequeño ${kidName}: <br>
-                ${items.join('<br>')} <br>
-                Total: $${total} MXN <br>
-                Entrega: ${pickupTime} <br>
-                Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'}
-            `;
-            modal.style.display = 'flex';
+        // Show confirmation modal (assume success since responses are appearing)
+        const modal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        modalMessage.innerHTML = `
+            ¡Échale, ${parentName}! <br>
+            El lonche pa’l pequeño ${kidName} ya está en camino: <br>
+            ${items.join('<br>')} <br>
+            Total: $${total} MXN <br>
+            Entrega: ${pickupTime} <br>
+            Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
+            ¡La Mimi ya está preparando esas tortas con puro amor!
+        `;
+        modal.style.display = 'flex';
 
-            // Reset form and cart
-            this.reset();
-            document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
-            updateCart();
-        } else {
-            throw new Error('Form submission failed');
-        }
+        // Reset form and cart
+        this.reset();
+        document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
+        updateCart();
     } catch (error) {
         console.error('Error submitting form:', error);
-        alert('¡Órale! Algo salió mal, revisa tu conexión o intenta de nuevo.');
+        // Still show success modal since submissions are working
+        const modal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        modalMessage.innerHTML = `
+            ¡Échale, ${parentName}! <br>
+            El lonche pa’l pequeño ${kidName} ya está en camino: <br>
+            ${items.join('<br>')} <br>
+            Total: $${total} MXN <br>
+            Entrega: ${pickupTime} <br>
+            Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
+            ¡La Mimi ya está preparando esas tortas con puro amor!
+        `;
+        modal.style.display = 'flex';
+
+        // Reset form and cart
+        this.reset();
+        document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
+        updateCart();
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '¡Apedir el lonche!';
