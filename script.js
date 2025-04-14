@@ -14,7 +14,7 @@ const updateBolsita = () => {
     });
 
     bolsitaCount.textContent = count;
-    bolsitaTotal.textContent = total;
+    bolsitaTotal.textContent = `$${total}`; // Added $
 
     // Animate bolsita
     const bolsita = document.getElementById('bolsita');
@@ -50,7 +50,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
 
     // Collect selected items
     const items = updateBolsita();
-    const total = parseFloat(document.getElementById('bolsita-total').textContent);
+    const total = parseFloat(document.getElementById('bolsita-total').textContent.replace('$', ''));
 
     // Google Forms integration
     const formData = new FormData();
