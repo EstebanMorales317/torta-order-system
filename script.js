@@ -14,7 +14,9 @@ const updateBolsita = () => {
     });
 
     bolsitaCount.textContent = count;
-    bolsitaTotal.textContent = `$${total}`; // Added $
+    bolsitaTotal.textContent = `$${total}`;
+    document.getElementById('preview-items').innerHTML = items.length ? items.join('<br>') : 'Aún no hay nada en la bolsita';
+    document.getElementById('preview-total').textContent = `Total: $${total} MXN`;
 
     // Animate bolsita
     const bolsita = document.getElementById('bolsita');
@@ -27,6 +29,24 @@ const updateBolsita = () => {
 // Update bolsita on checkbox change
 document.querySelectorAll('.item-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', updateBolsita);
+});
+
+// Bolsita preview modal
+document.getElementById('bolsita').addEventListener('click', () => {
+    const modal = document.getElementById('order-preview-modal');
+    modal.style.display = 'flex';
+});
+
+// Order button modal
+document.getElementById('order-btn').addEventListener('click', () => {
+    const modal = document.getElementById('order-form-modal');
+    modal.style.display = 'flex';
+});
+
+// Custom pickup time toggle
+document.getElementById('pickup-time').addEventListener('change', function() {
+    const customTime = document.getElementById('custom-time');
+    customTime.style.display = this.value === 'custom' ? 'block' : 'none';
 });
 
 // Payment method toggle
@@ -45,7 +65,10 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     // Collect form data
     const parentName = document.getElementById('parent-name').value;
     const kidName = document.getElementById('kid-name').value;
-    const pickupTime = document.getElementById('pickup-time').value;
+    let pickupTime = document.getElementById('pickup-time').value;
+    if (pickupTime === 'custom') {
+        pickupTime = document.getElementById('custom-time-input').value || 'Hora no especificada';
+    }
     const payment = document.getElementById('payment').value;
 
     // Collect selected items
@@ -80,6 +103,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
+        document.getElementById('order-form-modal').style.display = 'none';
 
         // Confetti celebration
         confetti({
@@ -93,6 +117,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         this.reset();
         document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
         updateBolsita();
+        document.getElementById('custom-time').style.display = 'none';
+        document.getElementById('bank-details').style.display = 'none';
     } catch (error) {
         console.error('Error submitting form:', error);
         // Show success anyway since it’s working
@@ -108,6 +134,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
+        document.getElementById('order-form-modal').style.display = 'none';
 
         // Confetti celebration
         confetti({
@@ -121,6 +148,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         this.reset();
         document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
         updateBolsita();
+        document.getElementById('custom-time').style.display = 'none';
+        document.getElementById('bank-details').style.display = 'none';
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '¡Apedir el lonche!';
@@ -128,8 +157,10 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
 });
 
 // Modal close logic
-document.querySelector('.close').addEventListener('click', () => {
-    document.getElementById('confirmation-modal').style.display = 'none';
+document.querySelectorAll('.close').forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+        closeBtn.closest('.modal').style.display = 'none';
+    });
 });
 
 // Initialize bolsita
