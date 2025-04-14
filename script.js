@@ -1,7 +1,7 @@
-// Cart logic
-const updateCart = () => {
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
+const updateBolsita = () => {
+    const bolsitaCount = document.getElementById('bolsita-count');
+    const bolsitaTotal = document.getElementById('bolsita-total');
+    let count = 0;
     let total = 0;
     const items = [];
 
@@ -9,23 +9,24 @@ const updateCart = () => {
         const price = parseFloat(item.getAttribute('data-price'));
         const name = item.getAttribute('data-name');
         items.push(`${name} ($${price})`);
+        count++;
         total += price;
     });
 
-    document.querySelectorAll('.extra:checked').forEach(extra => {
-        const price = parseFloat(extra.getAttribute('data-price'));
-        const name = extra.getAttribute('data-name');
-        items.push(`${name} ($${price})`);
-        total += price;
-    });
+    bolsitaCount.textContent = count;
+    bolsitaTotal.textContent = total;
 
-    cartItems.innerHTML = items.length ? items.join('<br>') : 'Aún no hay nada en el carrito';
-    cartTotal.textContent = total;
+    // Animate bolsita icon
+    const bolsitaIcon = document.querySelector('.bolsita-icon');
+    bolsitaIcon.classList.add('shake');
+    setTimeout(() => bolsitaIcon.classList.remove('shake'), 300);
+
+    return items;
 };
 
-// Update cart on checkbox change
-document.querySelectorAll('.item-checkbox, .extra').forEach(checkbox => {
-    checkbox.addEventListener('change', updateCart);
+// Update bolsita on checkbox change
+document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', updateBolsita);
 });
 
 // Payment method toggle
@@ -48,20 +49,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     const payment = document.getElementById('payment').value;
 
     // Collect selected items
-    const items = [];
-    let total = 0;
-    document.querySelectorAll('.item-checkbox:checked').forEach(item => {
-        const price = parseFloat(item.getAttribute('data-price'));
-        const name = item.getAttribute('data-name');
-        items.push(`${name} ($${price})`);
-        total += price;
-    });
-    document.querySelectorAll('.extra:checked').forEach(extra => {
-        const price = parseFloat(extra.getAttribute('data-price'));
-        const name = extra.getAttribute('data-name');
-        items.push(`${name} ($${price})`);
-        total += price;
-    });
+    const items = updateBolsita();
+    const total = parseFloat(document.getElementById('bolsita-total').textContent);
 
     // Google Forms integration
     const formData = new FormData();
@@ -78,7 +67,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             body: formData
         });
 
-        // Show confirmation modal (assume success since responses are appearing)
+        // Show confirmation modal
         const modal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         modalMessage.innerHTML = `
@@ -91,20 +80,22 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
-        confetti({
-    particleCount: 100,
-    spread: 70,
-    origin: { y: 0.6 },
-    colors: ['#e74c3c', '#2ecc71', '#f1c40f']
-});
 
-        // Reset form and cart
+        // Confetti celebration
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#e74c3c', '#2ecc71', '#f1c40f']
+        });
+
+        // Reset form and bolsita
         this.reset();
-        document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
-        updateCart();
+        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
+        updateBolsita();
     } catch (error) {
         console.error('Error submitting form:', error);
-        // Still show success modal since submissions are working
+        // Show success anyway since it’s working
         const modal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         modalMessage.innerHTML = `
@@ -118,10 +109,18 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         `;
         modal.style.display = 'flex';
 
-        // Reset form and cart
+        // Confetti celebration
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#e74c3c', '#2ecc71', '#f1c40f']
+        });
+
+        // Reset form and bolsita
         this.reset();
-        document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
-        updateCart();
+        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
+        updateBolsita();
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '¡Apedir el lonche!';
@@ -133,5 +132,5 @@ document.querySelector('.close').addEventListener('click', () => {
     document.getElementById('confirmation-modal').style.display = 'none';
 });
 
-// Initialize cart
-updateCart();
+// Initialize bolsita
+updateBolsita();
