@@ -14,7 +14,7 @@ header {
     background: linear-gradient(45deg, #2ecc71, #27ae60);
     color: white;
     text-align: center;
-    padding: 0.8rem;
+    padding: 0.6rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
@@ -22,29 +22,30 @@ header {
 }
 
 header h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 header p {
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 #bolsita {
     position: fixed;
-    top: 4rem; /* Moved down */
+    top: 4rem;
     right: 0.8rem;
     background: #e74c3c;
     color: white;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 8px rgba(231, 76, 60, 0.5); /* Added glow */
-    font-size: 0.8rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 8px rgba(231, 76, 60, 0.5);
+    font-size: 0.7rem;
     z-index: 101;
+    cursor: pointer;
     transition: transform 0.2s;
 }
 
@@ -58,17 +59,17 @@ header p {
 }
 
 .bolsita-icon {
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 #bolsita-count, #bolsita-total {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     line-height: 1.1;
 }
 
 main {
     padding: 0.8rem;
-    margin-top: 3rem; /* Adjusted for header */
+    margin-top: 3rem;
 }
 
 .menu-section {
@@ -115,7 +116,7 @@ main {
 }
 
 .item {
-    flex: 0 0 180px;
+    flex: 0 0 160px;
     background: white;
     border-radius: 12px;
     padding: 0.8rem;
@@ -131,7 +132,7 @@ main {
 
 .item img {
     width: 100%;
-    height: 120px;
+    height: 100px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 0.4rem;
@@ -181,47 +182,25 @@ main {
     font-size: 10px;
 }
 
-#order-form {
-    margin: 1.2rem 0;
-    text-align: center;
+.order-btn {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e74c3c;
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    transition: background 0.3s, transform 0.2s;
 }
 
-#order-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    max-width: 90%;
-    margin: 0 auto;
-    background: white;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-#order-form label {
-    font-size: 0.9rem;
-    color: #2c3e50;
-    text-align: left;
-}
-
-#order-form input,
-#order-form select {
-    padding: 0.6rem;
-    font-size: 0.9rem;
-    border: 2px solid #dfe6e9;
-    border-radius: 6px;
-    outline: none;
-}
-
-#order-form input:focus,
-#order-form select:focus {
-    border-color: #e74c3c;
-}
-
-#bank-details {
-    margin-top: 0.4rem;
-    font-size: 0.8rem;
-    color: #7f8c8d;
+.order-btn:hover {
+    background: #c0392b;
+    transform: translateX(-50%) translateY(-2px);
 }
 
 .btn {
@@ -296,6 +275,39 @@ footer {
     animation: slideIn 0.3s forwards;
 }
 
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.modal-content label {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    text-align: left;
+}
+
+.modal-content input,
+.modal-content select {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border: 2px solid #dfe6e9;
+    border-radius: 6px;
+    outline: none;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    border-color: #e74c3c;
+}
+
+#bank-details, #custom-time {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
 .close {
     position: absolute;
     top: 8px;
@@ -338,6 +350,11 @@ footer {
 
     .item img {
         height: 100px;
+    }
+
+    .order-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
     }
 
     #bolsita {
