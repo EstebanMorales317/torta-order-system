@@ -6,23 +6,25 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f9f9f9;
+    background: linear-gradient(to bottom, #fff8e1, #fff3e0);
+    color: #2c3e50;
 }
 
 header {
-    background-color: #2ecc71; /* Verde aguacate */
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
     color: white;
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 3rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 header p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 main {
@@ -32,86 +34,200 @@ main {
 }
 
 h2 {
-    color: #e74c3c; /* Rojo salsa */
-    margin-bottom: 1rem;
+    color: #e74c3c;
+    margin-bottom: 1.5rem;
     text-align: center;
+    font-size: 2rem;
+}
+
+#cart-preview {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#cart-items {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #7f8c8d;
 }
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
 }
 
 .item {
-    background-color: white;
-    border-radius: 10px;
-    padding: 1rem;
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards;
+    position: relative;
+    overflow: hidden;
 }
 
 .item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .item img {
     width: 100%;
-    max-width: 200px;
-    height: 200px;
+    max-width: 220px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+.item:hover img {
+    transform: scale(1.05);
 }
 
 .item h3 {
     color: #2c3e50;
     margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .item p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #7f8c8d;
+    margin-bottom: 1rem;
 }
 
-#order-form, #whatsapp, #qr-code {
-    margin: 2rem 0;
+.item label {
+    cursor: pointer;
+    font-size: 1rem;
+    color: #e74c3c;
+}
+
+#order-form {
+    margin: 3rem 0;
     text-align: center;
+}
+
+#order-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+#order-form label {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    text-align: left;
+}
+
+#order-form input,
+#order-form select {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#order-form input:focus,
+#order-form select:focus {
+    border-color: #e74c3c;
+}
+
+#bank-details {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: #7f8c8d;
 }
 
 .btn {
     display: inline-block;
-    background-color: #e74c3c;
+    background: #e74c3c;
     color: white;
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 2rem;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+    border: none;
 }
 
 .btn:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
+    background: #c0392b;
+    transform: translateY(-3px);
 }
 
 .btn-whatsapp {
-    background-color: #25D366;
+    background: #25D366;
 }
 
 .btn-whatsapp:hover {
-    background-color: #1DA851;
+    background: #1DA851;
+}
+
+#whatsapp, #qr-code {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+#qr-code img {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-    background-color: #2c3e50;
+    background: #2c3e50;
     color: white;
     text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2c3e50;
 }
 
 @keyframes fadeIn {
@@ -119,5 +235,34 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.item {
+    animation: fadeIn 0.5s forwards;
+}
+
 .item:nth-child(1) { animation-delay: 0.1s; }
 .item:nth-child(2) { animation-delay: 0.2s; }
+.item:nth-child(3) { animation-delay: 0.3s; }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .item img {
+        max-width: 180px;
+        height: 180px;
+    }
+
+    #order-form form {
+        padding: 1.5rem;
+    }
+}
