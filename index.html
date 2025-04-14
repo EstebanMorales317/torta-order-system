@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tortas de la Mimi - Pide tu lonchee</title>
+    <title>Tortas de la Mimi - Pide tu lonche</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -11,45 +11,134 @@
     <header>
         <h1>Tortas de la Mimi</h1>
         <p>¡Arma el lonche de tu pequeño pa’ mañana, qué show!</p>
+        <div id="bolsita">
+            <span class="bolsita-icon">🛍️</span>
+            <span id="bolsita-count">0</span> en la Bolsita de Lonche | Total: $<span id="bolsita-total">0</span> MXN
+        </div>
     </header>
 
     <main>
-        <section id="cart-preview">
-            <h2>Tu Pedido</h2>
-            <div id="cart-items">Aún no hay nada en el carrito</div>
-            <p><strong>Total: $<span id="cart-total">0</span> MXN</strong></p>
-        </section>
-
-        <section id="menu">
-            <h2>¿Qué te echamos?</h2>
-            <div class="menu-grid">
+        <section id="meals" class="menu-section">
+            <h2>Comida Pa’l Hambre</h2>
+            <div class="menu-scroll">
                 <div class="item">
-                    <img src="images/torta-jamon.webp" alt="Torta de jamón">
-                    <h3>Torta de Jamón - $18</h3>
-                    <p>Jamón, queso Oaxaca, aguacate bien chido.</p>
+                    <img src="images/cuernito.webp" alt="Cuernito">
+                    <h3>Cuernito - $20</h3>
+                    <p>Cuernito relleno de jamón y queso, ¡bien chido!</p>
                     <label class="custom-checkbox">
-                        <input type="checkbox" class="item-checkbox" data-price="18" data-name="Torta de Jamón">
-                        <span>Échale al carrito</span>
+                        <input type="checkbox" class="item-checkbox" data-price="20" data-name="Cuernito">
+                        <span>Échale a la bolsita</span>
                     </label>
-                    <p>Extras: <label class="custom-checkbox"><input type="checkbox" class="extra" data-price="5" data-name="Queso extra (Jamón)"><span>Queso extra (+$5)</span></label></p>
                 </div>
                 <div class="item">
-                    <img src="images/torta-milanesa.webp" alt="Torta de milanesa">
-                    <h3>Torta de Milanesa - $25</h3>
-                    <p>Milanesa de pollo, lechuga, jitomate, aguacate.</p>
+                    <img src="images/pechuga-sopa.webp" alt="Pechuga con sopa fría">
+                    <h3>Pechuga con Sopa Fría - $30</h3>
+                    <p>Pechuga asada con sopita fría de verduras.</p>
                     <label class="custom-checkbox">
-                        <input type="checkbox" class="item-checkbox" data-price="25" data-name="Torta de Milanesa">
-                        <span>Échale al carrito</span>
+                        <input type="checkbox" class="item-checkbox" data-price="30" data-name="Pechuga con Sopa Fría">
+                        <span>Échale a la bolsita</span>
                     </label>
-                    <p>Extras: <label class="custom-checkbox"><input type="checkbox" class="extra" data-price="5" data-name="Queso extra (Milanesa)"><span>Queso extra (+$5)</span></label></p>
+                </div>
+                <div class="item">
+                    <img src="images/sandwich.webp" alt="Sandwich">
+                    <h3>Sandwich - $18</h3>
+                    <p>Pan blanco, jamón, queso, lechuga y jitomate.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="18" data-name="Sandwich">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/sandwich-integral.webp" alt="Sandwich integral">
+                    <h3>Sandwich Integral - $20</h3>
+                    <p>Pan integral, pollo, aguacate y espinacas.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sandwich Integral">
+                        <span>Échale a la bolsita</span>
+                    </label>
                 </div>
                 <div class="item">
                     <img src="images/fruta.webp" alt="Fruta fresca">
-                    <h3>Fruta Fresca - $20</h3>
+                    <h3>Fruta Fresca - $15</h3>
                     <p>Toper de fruta de temporada, pa’l antojo.</p>
                     <label class="custom-checkbox">
-                        <input type="checkbox" class="item-checkbox" data-price="20" data-name="Fruta Fresca">
-                        <span>Échale al carrito</span>
+                        <input type="checkbox" class="item-checkbox" data-price="15" data-name="Fruta Fresca">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section id="desserts" class="menu-section">
+            <h2>Postres Pa’l Antojo</h2>
+            <div class="menu-scroll">
+                <div class="item">
+                    <img src="images/crackers.webp" alt="Crackers">
+                    <h3>Crackers - $10</h3>
+                    <p>Galletitas crujientes, perfectas pa’l recreo.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="10" data-name="Crackers">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/chocolate.webp" alt="Chocolate">
+                    <h3>Chocolate - $12</h3>
+                    <p>Barrita de chocolate, pa’l gustito.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="12" data-name="Chocolate">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/gelatina.webp" alt="Gelatina">
+                    <h3>Gelatina - $8</h3>
+                    <p>Gelatina de fresa, suavecita y rica.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="8" data-name="Gelatina">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/flan.webp" alt="Flan">
+                    <h3>Flan - $15</h3>
+                    <p>Flan casero, cremosito y con caramelo.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="15" data-name="Flan">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section id="drinks" class="menu-section">
+            <h2>Bebidas Pa’l Calor</h2>
+            <div class="menu-scroll">
+                <div class="item">
+                    <img src="images/agua.webp" alt="Agua">
+                    <h3>Agua - $10</h3>
+                    <p>Botellita de agua pura, bien fría.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="10" data-name="Agua">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/jugo.webp" alt="Jugo">
+                    <h3>Jugo - $12</h3>
+                    <p>Jugo natural de naranja o manzana.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="12" data-name="Jugo">
+                        <span>Échale a la bolsita</span>
+                    </label>
+                </div>
+                <div class="item">
+                    <img src="images/leche.webp" alt="Leche">
+                    <h3>Leche - $15</h3>
+                    <p>Leche chocolatada o natural, pa’l pequeño.</p>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="item-checkbox" data-price="15" data-name="Leche">
+                        <span>Échale a la bolsita</span>
                     </label>
                 </div>
             </div>
@@ -112,7 +201,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
