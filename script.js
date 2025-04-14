@@ -16,10 +16,10 @@ const updateBolsita = () => {
     bolsitaCount.textContent = count;
     bolsitaTotal.textContent = total;
 
-    // Animate bolsita icon
-    const bolsitaIcon = document.querySelector('.bolsita-icon');
-    bolsitaIcon.classList.add('shake');
-    setTimeout(() => bolsitaIcon.classList.remove('shake'), 300);
+    // Animate bolsita
+    const bolsita = document.getElementById('bolsita');
+    bolsita.classList.add('pulse');
+    setTimeout(() => bolsita.classList.remove('pulse'), 300);
 
     return items;
 };
