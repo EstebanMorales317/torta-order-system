@@ -7,7 +7,7 @@ const updateCart = () => {
 
     document.querySelectorAll('.item-checkbox:checked').forEach(item => {
         const price = parseFloat(item.getAttribute('data-price'));
-        const name = item.getAttribute('data-name'));
+        const name = item.getAttribute('data-name'); // Fixed syntax error
         items.push(`${name} ($${price})`);
         total += price;
     });
@@ -37,6 +37,9 @@ document.getElementById('payment').addEventListener('change', function() {
 // Form submission
 document.getElementById('custom-order-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
 
     // Collect form data
     const parentName = document.getElementById('parent-name').value;
@@ -60,42 +63,48 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         total += price;
     });
 
-    // Google Forms integration (replace with your form's action URL and field names)
+    // Google Forms integration
     const formData = new FormData();
-    formData.append('entry.1069885003', parentName); // Replace with your Google Form field ID
-    formData.append('entry.1194295238', kidName);   // Replace with your Google Form field ID
-    formData.append('entry.1139898634', pickupTime); // Replace with your Google Form field ID
-    formData.append('entry.1652796924', payment);    // Replace with your Google Form field ID
-    formData.append('entry.174677996', items.join(', ')); // Replace with your Google Form field ID
-    formData.append('entry.53053903', total);      // Replace with your Google Form field ID
+    formData.append('entry.1069885003', parentName);
+    formData.append('entry.1194295238', kidName);
+    formData.append('entry.1139898634', pickupTime);
+    formData.append('entry.1652796924', payment);
+    formData.append('entry.174677996', items.join(', '));
+    formData.append('entry.53053903', total);
 
     try {
-        await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
+        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
-            mode: 'no-cors',
             body: formData
         });
 
-        // Show confirmation modal
-        const modal = document.getElementById('confirmation-modal');
-        const modalMessage = document.getElementById('modal-message');
-        modalMessage.innerHTML = `
-            ¡Gracias, ${parentName}! <br>
-            Pedido pa’l pequeño ${kidName}: <br>
-            ${items.join('<br>')} <br>
-            Total: $${total} MXN <br>
-            Entrega: ${pickupTime} <br>
-            Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'}
-        `;
-        modal.style.display = 'block';
+        if (response.ok || response.type === 'opaque') {
+            // Show confirmation modal
+            const modal = document.getElementById('confirmation-modal');
+            const modalMessage = document.getElementById('modal-message');
+            modalMessage.innerHTML = `
+                ¡Gracias, ${parentName}! <br>
+                Pedido pa’l pequeño ${kidName}: <br>
+                ${items.join('<br>')} <br>
+                Total: $${total} MXN <br>
+                Entrega: ${pickupTime} <br>
+                Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'}
+            `;
+            modal.style.display = 'flex';
 
-        // Reset form and cart
-        this.reset();
-        document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
-        updateCart();
+            // Reset form and cart
+            this.reset();
+            document.querySelectorAll('.item-checkbox, .extra').forEach(cb => (cb.checked = false));
+            updateCart();
+        } else {
+            throw new Error('Form submission failed');
+        }
     } catch (error) {
         console.error('Error submitting form:', error);
-        alert('¡Órale! Algo salió mal, intenta de nuevo.');
+        alert('¡Órale! Algo salió mal, revisa tu conexión o intenta de nuevo.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '¡Apedir el lonche!';
     }
 });
 
