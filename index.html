@@ -20,6 +20,17 @@
     </header>
 
     <main>
+        <div class="toggle-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="delivery-toggle">
+                <span class="slider"></span>
+            </label>
+            <div class="toggle-labels">
+                <span id="lunch-label" class="active">Lunch para los niños</span>
+                <span id="delivery-label">Comida para entrega</span>
+            </div>
+        </div>
+
         <section id="meals" class="menu-section">
             <h2>Comida Pa’l Hambre</h2>
             <div class="menu-scroll">
@@ -211,6 +222,26 @@
                 <div id="bank-details" style="display: none;">
                     <p>CLABE: 1234-5678-9012-3456 (Banco Chido)</p>
                 </div>
+
+                <label for="delivery-location">Lugar de entrega:</label>
+                <select id="delivery-location" required>
+                    <option value="">Selecciona</option>
+                    <option value="school">En la escuela</option>
+                    <option value="other">Otro Lugar</option>
+                </select>
+
+                <div id="school-name" style="display: none;">
+                    <label for="school-name-input">Nombre de la escuela:</label>
+                    <input type="text" id="school-name-input" placeholder="Ej. Escuela Frida Kahlo">
+                </div>
+
+                <div id="other-address" style="display: none;">
+                    <label for="other-address-input">Dirección de entrega:</label>
+                    <input type="text" id="other-address-input" placeholder="Ej. Av. Lomas Verdes 123">
+                </div>
+
+                <label for="phone-number">Número de teléfono:</label>
+                <input type="tel" id="phone-number" required placeholder="Ej. 5551234567">
 
                 <button type="submit" class="btn" id="submit-btn">¡Apedir el lonche!</button>
             </form>
