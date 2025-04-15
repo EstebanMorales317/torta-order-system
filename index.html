@@ -311,24 +311,19 @@
                 </div>
 
                 <label for="delivery-location">Lugar de entrega:</label>
-                <select id="delivery-location" name="entry.1234567890" required>
+                <select id="delivery-location" required>
                     <option value="">Selecciona</option>
-                    <option value="school">En la escuela</option>
-                    <option value="other">Otro Lugar</option>
+                    <option value="En la escuela">En la escuela</option>
+                    <option value="Otro lugar">Otro lugar</option>
                 </select>
 
-                <div id="school-name" style="display: none;">
-                    <label for="school-name-input">Nombre de la escuela:</label>
-                    <input type="text" id="school-name-input" name="entry.0987654321" placeholder="Ej. Escuela Frida Kahlo">
-                </div>
-
-                <div id="other-address" style="display: none;">
-                    <label for="other-address-input">Dirección de entrega:</label>
-                    <input type="text" id="other-address-input" name="entry.5678901234" placeholder="Ej. Av. Lomas Verdes 123">
+                <div id="delivery-details" style="display: none;">
+                    <label for="delivery-details-input">Especifica el lugar:</label>
+                    <input type="text" id="delivery-details-input" name="entry.1404862194" placeholder="Ej. Escuela Frida Kahlo" required>
                 </div>
 
                 <label for="phone-number">Número de teléfono:</label>
-                <input type="tel" id="phone-number" name="entry.4321098765" required placeholder="Ej. 5551234567">
+                <input type="tel" id="phone-number" name="entry.499715070" required placeholder="Ej. 5551234567">
 
                 <input type="hidden" id="items-input" name="entry.174677996">
                 <input type="hidden" id="total-input" name="entry.53053903">
