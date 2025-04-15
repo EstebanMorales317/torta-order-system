@@ -113,42 +113,20 @@ document.getElementById('payment').addEventListener('change', function() {
 
 // Delivery location toggle
 document.getElementById('delivery-location').addEventListener('change', function() {
-    const schoolName = document.getElementById('school-name');
-    const otherAddress = document.getElementById('other-address');
-    schoolName.style.display = this.value === 'school' ? 'block' : 'none';
-    otherAddress.style.display = this.value === 'other' ? 'block' : 'none';
-});
-
-// Toggle switch logic
-document.getElementById('delivery-toggle').addEventListener('change', function() {
-    const lunchLabel = document.getElementById('lunch-label');
-    const deliveryLabel = document.getElementById('delivery-label');
-    const schoolMenu = document.getElementById('school-menu');
-    const deliveryMenu = document.getElementById('delivery-menu');
-    const body = document.body;
-
-    if (this.checked) {
-        lunchLabel.classList.remove('active');
-        deliveryLabel.classList.add('active');
-        schoolMenu.style.display = 'none';
-        deliveryMenu.style.display = 'block';
-        body.classList.remove('school-theme');
-        body.classList.add('delivery-theme');
-        // Clear bolsita for delivery menu
-        Object.keys(orderItems).forEach(key => delete orderItems[key]);
-        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-        updateBolsita();
+    const deliveryDetails = document.getElementById('delivery-details');
+    const deliveryInput = document.getElementById('delivery-details-input');
+    if (this.value === 'En la escuela') {
+        deliveryDetails.style.display = 'block';
+        deliveryInput.placeholder = 'Ej. Escuela Frida Kahlo';
+        deliveryInput.required = true;
+    } else if (this.value === 'Otro lugar') {
+        deliveryDetails.style.display = 'block';
+        deliveryInput.placeholder = 'Ej. Av. Lomas Verdes 123';
+        deliveryInput.required = true;
     } else {
-        lunchLabel.classList.add('active');
-        deliveryLabel.classList.remove('active');
-        schoolMenu.style.display = 'block';
-        deliveryMenu.style.display = 'none';
-        body.classList.remove('delivery-theme');
-        body.classList.add('school-theme');
-        // Clear bolsita for school menu
-        Object.keys(orderItems).forEach(key => delete orderItems[key]);
-        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-        updateBolsita();
+        deliveryDetails.style.display = 'none';
+        deliveryInput.required = false;
+        deliveryInput.value = '';
     }
 });
 
@@ -168,9 +146,11 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     }
     const payment = document.getElementById('payment').value;
     const deliveryLocation = document.getElementById('delivery-location').value;
-    const schoolNameInput = document.getElementById('school-name-input').value;
-    const otherAddressInput = document.getElementById('other-address-input').value;
+    const deliveryDetails = document.getElementById('delivery-details-input').value;
     const phoneNumber = document.getElementById('phone-number').value;
+
+    // Combine delivery location and details
+    const deliveryEntry = deliveryLocation && deliveryDetails ? `${deliveryLocation}: ${deliveryDetails}` : '';
 
     // Collect selected items
     const items = updateBolsita();
@@ -184,14 +164,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     formData.append('entry.1652796924', payment);
     formData.append('entry.174677996', items.join(', '));
     formData.append('entry.53053903', total);
-    formData.append('entry.1234567890', deliveryLocation === 'school' ? 'En la escuela' : 'Otro Lugar');
-    if (deliveryLocation === 'school' && schoolNameInput) {
-        formData.append('entry.0987654321', schoolNameInput);
-    }
-    if (deliveryLocation === 'other' && otherAddressInput) {
-        formData.append('entry.5678901234', otherAddressInput);
-    }
-    formData.append('entry.4321098765', phoneNumber);
+    formData.append('entry.1404862194', deliveryEntry);
+    formData.append('entry.499715070', phoneNumber);
 
     try {
         await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
@@ -208,8 +182,9 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ${items.join('<br>')} <br>
             Total: $${total} MXN <br>
             Entrega: ${pickupTime} <br>
-            Lugar: ${deliveryLocation === 'school' ? schoolNameInput : otherAddressInput} <br>
+            Lugar: ${deliveryEntry || 'No especificado'} <br>
             Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
+            Teléfono: ${phoneNumber} <br>
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
@@ -230,8 +205,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         updateBolsita();
         document.getElementById('custom-time').style.display = 'none';
         document.getElementById('bank-details').style.display = 'none';
-        document.getElementById('school-name').style.display = 'none';
-        document.getElementById('other-address').style.display = 'none';
+        document.getElementById('delivery-details').style.display = 'none';
     } catch (error) {
         console.error('Error submitting form:', error);
         // Show success anyway since it’s working
@@ -243,8 +217,9 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ${items.join('<br>')} <br>
             Total: $${total} MXN <br>
             Entrega: ${pickupTime} <br>
-            Lugar: ${deliveryLocation === 'school' ? schoolNameInput : otherAddressInput} <br>
+            Lugar: ${deliveryEntry || 'No especificado'} <br>
             Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
+            Teléfono: ${phoneNumber} <br>
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
         modal.style.display = 'flex';
@@ -265,8 +240,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         updateBolsita();
         document.getElementById('custom-time').style.display = 'none';
         document.getElementById('bank-details').style.display = 'none';
-        document.getElementById('school-name').style.display = 'none';
-        document.getElementById('other-address').style.display = 'none';
+        document.getElementById('delivery-details').style.display = 'none';
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '¡Apedir el lonche!';
