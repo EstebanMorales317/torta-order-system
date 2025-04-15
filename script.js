@@ -123,12 +123,32 @@ document.getElementById('delivery-location').addEventListener('change', function
 document.getElementById('delivery-toggle').addEventListener('change', function() {
     const lunchLabel = document.getElementById('lunch-label');
     const deliveryLabel = document.getElementById('delivery-label');
+    const schoolMenu = document.getElementById('school-menu');
+    const deliveryMenu = document.getElementById('delivery-menu');
+    const body = document.body;
+
     if (this.checked) {
         lunchLabel.classList.remove('active');
         deliveryLabel.classList.add('active');
+        schoolMenu.style.display = 'none';
+        deliveryMenu.style.display = 'block';
+        body.classList.remove('school-theme');
+        body.classList.add('delivery-theme');
+        // Clear bolsita for delivery menu
+        Object.keys(orderItems).forEach(key => delete orderItems[key]);
+        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
+        updateBolsita();
     } else {
         lunchLabel.classList.add('active');
         deliveryLabel.classList.remove('active');
+        schoolMenu.style.display = 'block';
+        deliveryMenu.style.display = 'none';
+        body.classList.remove('delivery-theme');
+        body.classList.add('school-theme');
+        // Clear bolsita for school menu
+        Object.keys(orderItems).forEach(key => delete orderItems[key]);
+        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
+        updateBolsita();
     }
 });
 
@@ -259,5 +279,6 @@ document.querySelectorAll('.close').forEach(closeBtn => {
     });
 });
 
-// Initialize bolsita
+// Initialize bolsita and theme
+document.body.classList.add('school-theme');
 updateBolsita();
