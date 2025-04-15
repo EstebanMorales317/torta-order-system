@@ -280,13 +280,13 @@
             <h2>Arma tu pedido</h2>
             <form id="custom-order-form">
                 <label for="parent-name">Tu nombre:</label>
-                <input type="text" id="parent-name" required placeholder="Ej. Juan Pérez">
+                <input type="text" id="parent-name" name="entry.1069885003" required placeholder="Ej. Juan Pérez">
 
                 <label for="kid-name">Nombre del pequeño:</label>
-                <input type="text" id="kid-name" required placeholder="Ej. Pepito">
+                <input type="text" id="kid-name" name="entry.1194295238" required placeholder="Ej. Pepito">
 
                 <label for="pickup-time">Hora de entrega:</label>
-                <select id="pickup-time" required>
+                <select id="pickup-time" name="entry.1139898634" required>
                     <option value="">Elige una hora</option>
                     <option value="7:30 AM">7:30 AM</option>
                     <option value="8:00 AM">8:00 AM</option>
@@ -300,7 +300,7 @@
                 </div>
 
                 <label for="payment">Método de pago:</label>
-                <select id="payment" required>
+                <select id="payment" name="entry.1652796924" required>
                     <option value="">Selecciona</option>
                     <option value="cash">En efectivo (al recibir)</option>
                     <option value="transfer">Transferencia bancaria</option>
@@ -311,7 +311,7 @@
                 </div>
 
                 <label for="delivery-location">Lugar de entrega:</label>
-                <select id="delivery-location" required>
+                <select id="delivery-location" name="entry.1234567890" required>
                     <option value="">Selecciona</option>
                     <option value="school">En la escuela</option>
                     <option value="other">Otro Lugar</option>
@@ -319,16 +319,19 @@
 
                 <div id="school-name" style="display: none;">
                     <label for="school-name-input">Nombre de la escuela:</label>
-                    <input type="text" id="school-name-input" placeholder="Ej. Escuela Frida Kahlo">
+                    <input type="text" id="school-name-input" name="entry.0987654321" placeholder="Ej. Escuela Frida Kahlo">
                 </div>
 
                 <div id="other-address" style="display: none;">
                     <label for="other-address-input">Dirección de entrega:</label>
-                    <input type="text" id="other-address-input" placeholder="Ej. Av. Lomas Verdes 123">
+                    <input type="text" id="other-address-input" name="entry.5678901234" placeholder="Ej. Av. Lomas Verdes 123">
                 </div>
 
                 <label for="phone-number">Número de teléfono:</label>
-                <input type="tel" id="phone-number" required placeholder="Ej. 5551234567">
+                <input type="tel" id="phone-number" name="entry.4321098765" required placeholder="Ej. 5551234567">
+
+                <input type="hidden" id="items-input" name="entry.174677996">
+                <input type="hidden" id="total-input" name="entry.53053903">
 
                 <button type="submit" class="btn" id="submit-btn">¡Apedir el lonche!</button>
             </form>
