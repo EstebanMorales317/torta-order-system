@@ -111,6 +111,27 @@ document.getElementById('payment').addEventListener('change', function() {
     bankDetails.style.display = this.value === 'transfer' ? 'block' : 'none';
 });
 
+// Delivery location toggle
+document.getElementById('delivery-location').addEventListener('change', function() {
+    const schoolName = document.getElementById('school-name');
+    const otherAddress = document.getElementById('other-address');
+    schoolName.style.display = this.value === 'school' ? 'block' : 'none';
+    otherAddress.style.display = this.value === 'other' ? 'block' : 'none';
+});
+
+// Toggle switch logic
+document.getElementById('delivery-toggle').addEventListener('change', function() {
+    const lunchLabel = document.getElementById('lunch-label');
+    const deliveryLabel = document.getElementById('delivery-label');
+    if (this.checked) {
+        lunchLabel.classList.remove('active');
+        deliveryLabel.classList.add('active');
+    } else {
+        lunchLabel.classList.add('active');
+        deliveryLabel.classList.remove('active');
+    }
+});
+
 // Form submission
 document.getElementById('custom-order-form').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -126,6 +147,10 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         pickupTime = document.getElementById('custom-time-input').value || 'Hora no especificada';
     }
     const payment = document.getElementById('payment').value;
+    const deliveryLocation = document.getElementById('delivery-location').value;
+    const schoolNameInput = document.getElementById('school-name-input').value;
+    const otherAddressInput = document.getElementById('other-address-input').value;
+    const phoneNumber = document.getElementById('phone-number').value;
 
     // Collect selected items
     const items = updateBolsita();
@@ -139,6 +164,13 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     formData.append('entry.1652796924', payment);
     formData.append('entry.174677996', items.join(', '));
     formData.append('entry.53053903', total);
+    formData.append('entry.1234567890', deliveryLocation === 'school' ? 'En la escuela' : 'Otro Lugar');
+    if (deliveryLocation === 'school' && schoolNameInput) {
+        formData.append('entry.0987654321', schoolNameInput);
+    } else if (deliveryLocation === 'other' && otherAddressInput) {
+        formData.append('entry.5678901234', otherAddressInput);
+    }
+    formData.append('entry.4321098765', phoneNumber);
 
     try {
         await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
@@ -155,6 +187,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ${items.join('<br>')} <br>
             Total: $${total} MXN <br>
             Entrega: ${pickupTime} <br>
+            Lugar: ${deliveryLocation === 'school' ? schoolNameInput : otherAddressInput} <br>
             Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
@@ -176,6 +209,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         updateBolsita();
         document.getElementById('custom-time').style.display = 'none';
         document.getElementById('bank-details').style.display = 'none';
+        document.getElementById('school-name').style.display = 'none';
+        document.getElementById('other-address').style.display = 'none';
     } catch (error) {
         console.error('Error submitting form:', error);
         // Show success anyway since it’s working
@@ -187,6 +222,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
             ${items.join('<br>')} <br>
             Total: $${total} MXN <br>
             Entrega: ${pickupTime} <br>
+            Lugar: ${deliveryLocation === 'school' ? schoolNameInput : otherAddressInput} <br>
             Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
             ¡La Mimi ya está preparando esas tortas con puro amor!
         `;
@@ -208,6 +244,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
         updateBolsita();
         document.getElementById('custom-time').style.display = 'none';
         document.getElementById('bank-details').style.display = 'none';
+        document.getElementById('school-name').style.display = 'none';
+        document.getElementById('other-address').style.display = 'none';
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = '¡Apedir el lonche!';
