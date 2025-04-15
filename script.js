@@ -187,7 +187,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async fu
     formData.append('entry.1234567890', deliveryLocation === 'school' ? 'En la escuela' : 'Otro Lugar');
     if (deliveryLocation === 'school' && schoolNameInput) {
         formData.append('entry.0987654321', schoolNameInput);
-    } else if (deliveryLocation === 'other' && otherAddressInput) {
+    }
+    if (deliveryLocation === 'other' && otherAddressInput) {
         formData.append('entry.5678901234', otherAddressInput);
     }
     formData.append('entry.4321098765', phoneNumber);
