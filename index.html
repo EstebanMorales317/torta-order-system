@@ -1,349 +1,843 @@
-const orderItems = {};
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tortas de la Mimi - Pide tu lonche</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="images/Logo MyL.jpg" alt="Tortas de la Mimi Logo" class="logo">
+        <h1>Tortas de Mimi y Lalo</h1>
+        <p>Ordena el lonche de tu pequeño o comida pa’l antojo, ¡Vamos!</p>
+        <div id="bolsita">
+            <span class="bolsita-icon">🛍️</span>
+            <span id="bolsita-count">0</span>
+            <span id="bolsita-total">$0</span>
+        </div>
+    </header>
 
-const updateBolsita = () => {
-    const bolsitaCount = document.getElementById('bolsita-count');
-    const bolsitaTotal = document.getElementById('bolsita-total');
-    const previewItems = document.getElementById('preview-items');
-    const orderBtn = document.getElementById('order-btn');
-    let count = 0;
-    let total = 0;
-    const items = [];
-
-    // Aggregate items
-    Object.keys(orderItems).forEach(name => {
-        const qty = orderItems[name].quantity;
-        if (qty > 0) {
-            const price = orderItems[name].price;
-            items.push({ name, qty, price });
-            count += qty;
-            total += qty * price;
-        }
-    });
-
-    // Update bolsita badge
-    bolsitaCount.textContent = count;
-    bolsitaTotal.textContent = `$${total}`;
-
-    // Update preview modal
-    if (items.length) {
-        previewItems.innerHTML = items.map(item => `
-            <div class="item-row">
-                <span>${item.name} ($${item.price}) x${item.qty}</span>
-                <div class="quantity-controls">
-                    <button class="qty-btn minus" data-name="${item.name}">-</button>
-                    <button class="qty-btn plus" data-name="${item.name}">+</button>
-                </div>
+    <main>
+        <div class="toggle-container">
+            <label class="toggle-switch">
+                <input type="checkbox" id="delivery-toggle">
+                <span class="slider"></span>
+            </label>
+            <div class="toggle-labels">
+                <span id="lunch-label" class="active">Lunch para los niños</span>
+                <span id="delivery-label">Comida para entrega</span>
             </div>
-        `).join('');
-    } else {
-        previewItems.innerHTML = 'Aún no hay nada en la bolsita';
-    }
-    document.getElementById('preview-total').textContent = `Total: $${total} MXN`;
+        </div>
 
-    // Update order button state
-    orderBtn.disabled = count === 0;
-    orderBtn.style.background = count > 0 ? '#2ecc71' : '#7f8c8d';
-    orderBtn.style.cursor = count > 0 ? 'pointer' : 'not-allowed';
+        <!-- School Lunch Menu -->
+        <div id="school-menu" class="menu-container">
+            <section id="meals" class="menu-section">
+                <h2>Tortas Pa’l Recreo</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta Salchichona">
+                        <h3>Torta Salchichona - $20</h3>
+                        <p>Frijoles refritos, salchicha de pavo, queso blanco, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Torta Salchichona">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta de Jamón">
+                        <h3>Torta de Jamón - $20</h3>
+                        <p>Frijoles refritos, jamón de pierna, queso blanco, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Torta de Jamón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Sandwich Sencillo">
+                        <h3>Sandwich Sencillo - $20</h3>
+                        <p>Frijoles refritos, jamón de pierna, queso blanco, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sandwich Sencillo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/cuerno.jpeg" alt="Cuernito Chico">
+                        <h3>Cuernito Chico - $20</h3>
+                        <p>Jamón de pierna, queso blanco, queso amarillo, aguacate, jitomate, lechuga</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Cuernito Chico">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwichi.jpg" alt="Sandwich Integral">
+                        <h3>Sandwich Integral - $35</h3>
+                        <p>Frijoles refritos, jamón de pierna, queso blanco, queso amarillo, aguacate, jitomate, lechuga, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Sandwich Integral">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Sandwich Completo">
+                        <h3>Sandwich Completo - $35</h3>
+                        <p>Frijoles refritos, jamón de pierna, queso blanco, aguacate, jitomate, lechuga, mayonesa, queso amarillo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Sandwich Completo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-    // Animate bolsita
-    const bolsita = document.getElementById('bolsita');
-    bolsita.classList.add('pulse');
-    setTimeout(() => bolsita.classList.remove('pulse'), 300);
+            <section id="sopas" class="menu-section">
+                <h2>Sopas y Combos</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/pechuga.jpg" alt="Sopa de Codito con Nuggets">
+                        <h3>Sopa de Codito con Nuggets - $20</h3>
+                        <p>Sopa fría de codito con crema, jamón de pierna, 3 nuggets de pechuga</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sopa de Codito con Nuggets">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/pechuga.jpg" alt="Sopa de Codito con Pechuga Empanizada">
+                        <h3>Sopa de Codito con Pechuga Empanizada - $20</h3>
+                        <p>Sopa fría de codito con crema, jamón de pierna, 3 trozos de pechuga empanizada</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sopa de Codito con Pechuga Empanizada">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/pechuga.jpg" alt="Sopa de Codito con Rollitos">
+                        <h3>Sopa de Codito con Rollitos - $20</h3>
+                        <p>Sopa fría de codito con crema, jamón de pierna, 2 rollitos de jamón con queso Oaxaca</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sopa de Codito con Rollitos">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/pechuga.jpg" alt="Sopa de Codito con Pechuga Asada">
+                        <h3>Sopa de Codito con Pechuga Asada - $20</h3>
+                        <p>Sopa fría de codito con crema, jamón de pierna, 3 trozos de pechuga asada</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Sopa de Codito con Pechuga Asada">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-    return items.map(item => `${item.name} ($${item.price}) x${item.qty}`);
-};
+            <section id="frutas" class="menu-section">
+                <h2>Frutas y Ensaladas</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Toper de Sandía">
+                        <h3>Toper de Sandía - $20</h3>
+                        <p>Sandía fresca, perfecta pa’l antojo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Toper de Sandía">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Toper de Sandía y Melón">
+                        <h3>Toper de Sandía y Melón - $20</h3>
+                        <p>Mezcla fresca de sandía y melón</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Toper de Sandía y Melón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Ensalada de Manzana">
+                        <h3>Ensalada de Manzana - $25</h3>
+                        <p>Vaso de manzana con crema, bien rica</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="25" data-name="Ensalada de Manzana">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Zanahoria con Jícama">
+                        <h3>Zanahoria con Jícama - $20</h3>
+                        <p>Zanahoria y jícama con sal, limón y miguelito</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Zanahoria con Jícama">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Toper de Mango y Melón">
+                        <h3>Toper de Mango y Melón - $20</h3>
+                        <p>Mezcla fresca de mango y melón</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Toper de Mango y Melón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Toper de Naranja">
+                        <h3>Toper de Naranja - $20</h3>
+                        <p>Naranja fresca, pa’l calor</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Toper de Naranja">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Toper de Melón">
+                        <h3>Toper de Melón - $20</h3>
+                        <p>Melón fresco, bien jugoso</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Toper de Melón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/fruta.jpeg" alt="Fresas con Crema">
+                        <h3>Fresas con Crema - $25</h3>
+                        <p>Vaso de fresas frescas con crema</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="25" data-name="Fresas con Crema">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-// Checkbox change handler with flavor support
-document.addEventListener('change', (e) => {
-    if (e.target.classList.contains('item-checkbox')) {
-        const checkbox = e.target;
-        const baseName = checkbox.getAttribute('data-name');
-        const price = parseFloat(checkbox.getAttribute('data-price'));
-        const flavorSelect = checkbox.closest('.item').querySelector('.flavor-select');
-        const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
-        const name = `${baseName}${flavor}`;
+            <section id="snacks" class="menu-section">
+                <h2>Dulces y Snacks</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Barritas Marinela">
+                        <h3>Barritas Marinela - $18</h3>
+                        <p>Barritas dulces, perfectas pa’l recreo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Barritas Marinela">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Galletas Oreo">
+                        <h3>Galletas Oreo 63g - $18</h3>
+                        <p>Galletas Oreo, 63g, crujientes y deliciosas</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Galletas Oreo 63g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Pastelito Kinder Delice">
+                        <h3>Pastelito Kinder Delice 39g - $20</h3>
+                        <p>Pastelito Kinder Delice, 39g, pa’l antojo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Pastelito Kinder Delice 39g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Galletas Triki Trakes">
+                        <h3>Galletas Triki Trakes 34g - $8</h3>
+                        <p>4 galletas Triki Trakes, 34g, bien ricas</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="8" data-name="Galletas Triki Trakes 34g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Galletas Canelitas">
+                        <h3>Galletas Canelitas 30g - $8</h3>
+                        <p>Galletas Canelitas, 30g, con sabor a canela</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="8" data-name="Galletas Canelitas 30g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Nito Bimbo">
+                        <h3>Nito Bimbo - $18</h3>
+                        <p>Nito Bimbo, pa’l gustito dulce</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Nito Bimbo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Mantecadas Bimbo">
+                        <h3>Mantecadas Bimbo - $14</h3>
+                        <p>2 piezas de mantecadas Bimbo, suavecitas</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="14" data-name="Mantecadas Bimbo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Donitas Bimbo">
+                        <h3>Donitas Bimbo - $14</h3>
+                        <p>3 piezas de donitas Bimbo, pa’l antojo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="14" data-name="Donitas Bimbo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Paleta Payaso">
+                        <h3>Paleta Payaso 45g - $20</h3>
+                        <p>Paleta Payaso, 45g, dulce y divertida</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Paleta Payaso 45g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/gelatina.jpeg" alt="Gelatina Casera">
+                        <h3>Gelatina Casera - $15</h3>
+                        <p>Gelatina de leche combinada con gelatina de agua y frutas</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Gelatina Casera">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/flan.jpeg" alt="Flan Casero">
+                        <h3>Flan Casero - $15</h3>
+                        <p>Flan casero, cremosito con caramelo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Flan Casero">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-        if (checkbox.checked) {
-            if (flavorSelect && !flavor) {
-                alert('Por favor, elige un sabor antes de añadir a la bolsita.');
-                checkbox.checked = false;
-                return;
-            }
-            orderItems[name] = { quantity: (orderItems[name]?.quantity || 0) + 1, price };
-        } else {
-            if (orderItems[name]) {
-                orderItems[name].quantity = 0;
-                delete orderItems[name];
-            }
-        }
-        updateBolsita();
-    } else if (e.target.classList.contains('flavor-select')) {
-        const baseName = e.target.getAttribute('data-name');
-        const flavor = e.target.value;
-        const checkbox = e.target.closest('.item').querySelector('.item-checkbox');
-        if (checkbox.checked) {
-            const oldName = Object.keys(orderItems).find(key => key.startsWith(baseName));
-            if (oldName && flavor) {
-                const qty = orderItems[oldName].quantity;
-                const price = orderItems[oldName].price;
-                delete orderItems[oldName];
-                orderItems[`${baseName} (${flavor})`] = { quantity: qty, price };
-                updateBolsita();
-            }
-        }
-    }
-});
+            <section id="drinks" class="menu-section">
+                <h2>Bebidas Pa’l Calor</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Agua Bonafont 1L">
+                        <h3>Agua Bonafont 1L - $15</h3>
+                        <p>Agua natural, 1 litro, bien fría</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Agua Bonafont 1L">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Agua Bonafont 500ml">
+                        <h3>Agua Bonafont 500ml - $10</h3>
+                        <p>Agua natural, 500ml, pa’l calor</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="10" data-name="Agua Bonafont 500ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Agua Bonafont 330ml">
+                        <h3>Agua Bonafont 330ml - $8</h3>
+                        <p>Agua natural, 330ml, pa’l pequeño</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="8" data-name="Agua Bonafont 330ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Agua Bonafont Kids">
+                        <h3>Agua Bonafont Kids 300ml - $12</h3>
+                        <p>Agua saborizada, 300ml</p>
+                        <select class="flavor-select" data-name="Agua Bonafont Kids 300ml" data-price="12">
+                            <option value="">Elige sabor</option>
+                            <option value="Naranja">Naranja</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="Limón">Limón</option>
+                        </select>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="12" data-name="Agua Bonafont Kids 300ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/jugo.jpg" alt="Jugo Boing 1L">
+                        <h3>Jugo Boing 1L - $29</h3>
+                        <p>Jugo de fruta, 1 litro, pa’l antojo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="29" data-name="Jugo Boing 1L">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/jugo.jpg" alt="Jugo Boing 500ml">
+                        <h3>Jugo Boing 500ml - $20</h3>
+                        <p>Jugo de fruta, 500ml, refrescante</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Jugo Boing 500ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/jugo.jpg" alt="Jugo Boing 250ml">
+                        <h3>Jugo Boing 250ml - $13</h3>
+                        <p>Jugo de fruta, 250ml, pa’l pequeño</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="13" data-name="Jugo Boing 250ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Leche Yomi Lala">
+                        <h3>Leche Yomi Lala 180ml - $13</h3>
+                        <p>Leche de sabor, 180ml</p>
+                        <select class="flavor-select" data-name="Leche Yomi Lala 180ml" data-price="13">
+                            <option value="">Elige sabor</option>
+                            <option value="Vainilla">Vainilla</option>
+                            <option value="Fresa">Fresa</option>
+                            <option value="Chocolate">Chocolate</option>
+                        </select>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="13" data-name="Leche Yomi Lala 180ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/jugo.jpg" alt="Jugo Del Valle">
+                        <h3>Jugo Del Valle 412ml - $20</h3>
+                        <p>Jugo de mango y durazno, 412ml</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Jugo Del Valle 412ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Aguafiel de Sabor">
+                        <h3>Aguafiel de Sabor 500ml - $12</h3>
+                        <p>Agua saborizada, 500ml</p>
+                        <select class="flavor-select" data-name="Aguafiel de Sabor 500ml" data-price="12">
+                            <option value="">Elige sabor</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="Naranja">Naranja</option>
+                            <option value="Limón">Limón</option>
+                        </select>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="12" data-name="Aguafiel de Sabor 500ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Leche Alpura">
+                        <h3>Leche Alpura 180ml - $15</h3>
+                        <p>Leche de sabor, 180ml</p>
+                        <select class="flavor-select" data-name="Leche Alpura 180ml" data-price="15">
+                            <option value="">Elige sabor</option>
+                            <option value="Vainilla">Vainilla</option>
+                            <option value="Fresa">Fresa</option>
+                            <option value="Chocolate">Chocolate</option>
+                        </select>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Leche Alpura 180ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Leche Natural">
+                        <h3>Leche Natural 180ml - $15</h3>
+                        <p>Leche natural, 180ml, pa’l pequeño</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Leche Natural 180ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Yakult">
+                        <h3>Yakult 80ml - $11</h3>
+                        <p>Yakult, 80ml, pa’l estómago</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="11" data-name="Yakult 80ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Yogurt Alpura Vaso">
+                        <h3>Yogurt Alpura Vaso 120g - $13</h3>
+                        <p>Yogurt en vaso, 120g</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="13" data-name="Yogurt Alpura Vaso 120g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Yogurt Alpura Bebible">
+                        <h3>Yogurt Alpura Bebible 220g - $18</h3>
+                        <p>Yogurt bebible, 220g</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Yogurt Alpura Bebible 220g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Yogurt con Cereal Alpura">
+                        <h3>Yogurt con Cereal Alpura 142g - $18</h3>
+                        <p>Yogurt con cereal, 142g, bien crunchy</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Yogurt con Cereal Alpura 142g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Danonino Apachurrable">
+                        <h3>Danonino Apachurrable 70g - $18</h3>
+                        <p>Queso petit suisse, 70g, pa’l pequeño</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Danonino Apachurrable 70g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Danonino 84g">
+                        <h3>Danonino 84g - $18</h3>
+                        <p>Danonino, 84g, cremoso y rico</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Danonino 84g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Danonino 42g">
+                        <h3>Danonino 42g - $10</h3>
+                        <p>Danonino, 42g, pa’l antojo chiquito</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="10" data-name="Danonino 42g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/leche.jpeg" alt="Danonino Bebible">
+                        <h3>Danonino Bebible 170g - $18</h3>
+                        <p>Danonino bebible, 170g, bien fresco</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="18" data-name="Danonino Bebible 170g">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-// Bolsita preview modal
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#bolsita')) {
-        const modal = document.getElementById('order-preview-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            console.error('Order preview modal not found');
-        }
-    }
-});
+            <section id="extras" class="menu-section">
+                <h2>Extras Pa’l Día</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Cubre Bocas Niño">
+                        <h3>Cubre Bocas Niño - $5</h3>
+                        <p>Cubre bocas para pequeños, seguro y cómodo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="5" data-name="Cubre Bocas Niño">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Cubre Bocas Adulto">
+                        <h3>Cubre Bocas Adulto - $5</h3>
+                        <p>Cubre bocas para adultos, pa’l cuidado</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="5" data-name="Cubre Bocas Adulto">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/crackers.jpg" alt="Kleenex">
+                        <h3>Kleenex - $8</h3>
+                        <p>Pañuelos Kleenex, pa’l día a día</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="8" data-name="Kleenex">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-// Quantity buttons in preview modal
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('qty-btn')) {
-        const name = e.target.getAttribute('data-name');
-        const isPlus = e.target.classList.contains('plus');
-        if (orderItems[name]) {
-            orderItems[name].quantity += isPlus ? 1 : -1;
-            if (orderItems[name].quantity <= 0) {
-                delete orderItems[name];
-                const checkbox = document.querySelector(`.item-checkbox[data-name="${name.split(' (')[0]}"]`);
-                if (checkbox) checkbox.checked = false;
-            }
-        }
-        updateBolsita();
-    }
-});
+        <!-- Delivery Menu -->
+        <div id="delivery-menu" class="menu-container" style="display: none;">
+            <section id="delivery-meals" class="menu-section">
+                <h2>Tortas Chingonas</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta de Milanesa">
+                        <h3>Torta de Milanesa - $35</h3>
+                        <p>Milanesa de pollo, queso Oaxaca, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Torta de Milanesa">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta Completa de Jamón">
+                        <h3>Torta Completa de Jamón - $30</h3>
+                        <p>Jamón de pierna, queso Oaxaca, frijoles refritos, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="30" data-name="Torta Completa de Jamón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta Completa de Salchicha">
+                        <h3>Torta Completa de Salchicha - $35</h3>
+                        <p>Salchicha de pavo, frijoles refritos, queso Oaxaca, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Torta Completa de Salchicha">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/cuerno.jpeg" alt="Cuernito Grande">
+                        <h3>Cuernito Grande - $35</h3>
+                        <p>Jamón de pierna, queso blanco, queso amarillo, aguacate, jitomate, lechuga italiana</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Cuernito Grande">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta Especial">
+                        <h3>Torta Especial - $55</h3>
+                        <p>Pechuga de pollo empanizada, frijoles refritos, salchicha de pavo, huevo, jamón de pierna, aguacate, jitomate, lechuga, queso Oaxaca, picante (chiles en vinagre, chipotle o salsa macha), mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="55" data-name="Torta Especial">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta de Huevo">
+                        <h3>Torta de Huevo - $35</h3>
+                        <p>Huevo, frijoles refritos, queso Oaxaca, jitomate, lechuga, aguacate, picante (chiles en vinagre, chipotle o salsa macha), mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Torta de Huevo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/torta.jpeg" alt="Torta de Pierna">
+                        <h3>Torta de Pierna - $35</h3>
+                        <p>Jamón de pierna, queso Oaxaca, jitomate, aguacate, frijoles refritos, lechuga italiana</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Torta de Pierna">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-// Order button modal
-document.addEventListener('click', (e) => {
-    if (e.target.id === 'order-btn' && !e.target.disabled) {
-        const modal = document.getElementById('order-form-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            console.error('Order form modal not found');
-        }
-    }
-});
+            <section id="delivery-sincronizadas" class="menu-section">
+                <h2>Sincronizadas y Hot Dogs</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Sincronizada Sencilla">
+                        <h3>Sincronizada Sencilla - $25</h3>
+                        <p>2 piezas: tortilla de harina, jamón de pierna, queso Oaxaca, queso amarillo, cátsup, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="25" data-name="Sincronizada Sencilla">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Sincronizada Grande">
+                        <h3>Sincronizada Grande - $35</h3>
+                        <p>2 tortillas de harina, jamón de pierna, queso Oaxaca, queso amarillo, jitomate, piña, cebolla, cátsup, mayonesa, picante (salsa macha)</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Sincronizada Grande">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Perro Caliente Sencillo">
+                        <h3>Perro Caliente Sencillo - $20</h3>
+                        <p>Salchicha de pavo, cátsup, mayonesa</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="20" data-name="Perro Caliente Sencillo">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/sandwich.jpeg" alt="Perro Caliente Chingón">
+                        <h3>Perro Caliente Chingón - $35</h3>
+                        <p>Salchicha de pavo, tocino, queso Oaxaca, piña, jitomate, cátsup, mayonesa, picante (salsa macha)</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="35" data-name="Perro Caliente Chingón">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-// Custom pickup time toggle
-document.addEventListener('change', (e) => {
-    if (e.target.id === 'pickup-time') {
-        const customTime = document.getElementById('custom-time');
-        if (customTime) {
-            customTime.style.display = e.target.value === 'custom' ? 'block' : 'none';
-        }
-    }
-});
+            <section id="delivery-desserts" class="menu-section">
+                <h2>Postres Caseros</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/flan.jpeg" alt="Flan Casero">
+                        <h3>Flan Casero - $15</h3>
+                        <p>Flan casero, cremosito con caramelo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Flan Casero">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/gelatina.jpeg" alt="Gelatina Casera">
+                        <h3>Gelatina Casera - $15</h3>
+                        <p>Gelatina de leche combinada con gelatina de agua y frutas</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Gelatina Casera">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
 
-// Payment method toggle
-document.addEventListener('change', (e) => {
-    if (e.target.id === 'payment') {
-        const bankDetails = document.getElementById('bank-details');
-        if (bankDetails) {
-            bankDetails.style.display = e.target.value === 'transfer' ? 'block' : 'none';
-        }
-    }
-});
+            <section id="delivery-drinks" class="menu-section">
+                <h2>Bebidas Frescas</h2>
+                <div class="menu-scroll">
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Agua Bonafont 1L">
+                        <h3>Agua Bonafont 1L - $15</h3>
+                        <p>Agua natural, 1 litro, bien fría</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="15" data-name="Agua Bonafont 1L">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/agua.jpeg" alt="Aguafiel de Sabor">
+                        <h3>Aguafiel de Sabor 500ml - $12</h3>
+                        <p>Agua saborizada, 500ml</p>
+                        <select class="flavor-select" data-name="Aguafiel de Sabor 500ml" data-price="12">
+                            <option value="">Elige sabor</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="Naranja">Naranja</option>
+                            <option value="Limón">Limón</option>
+                        </select>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="12" data-name="Aguafiel de Sabor 500ml">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                    <div class="item">
+                        <img src="images/jugo.jpg" alt="Jugo Boing 1L">
+                        <h3>Jugo Boing 1L - $29</h3>
+                        <p>Jugo de fruta, 1 litro, pa’l antojo</p>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" class="item-checkbox" data-price="29" data-name="Jugo Boing 1L">
+                            <span>Échale a la bolsita</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-// Delivery location toggle
-document.addEventListener('change', (e) => {
-    if (e.target.id === 'delivery-location') {
-        const deliveryDetails = document.getElementById('delivery-details');
-        const deliveryInput = document.getElementById('delivery-details-input');
-        if (deliveryDetails && deliveryInput) {
-            if (e.target.value === 'En la escuela') {
-                deliveryDetails.style.display = 'block';
-                deliveryInput.placeholder = 'Ej. Escuela Frida Kahlo';
-                deliveryInput.required = true;
-            } else if (e.target.value === 'Otro lugar') {
-                deliveryDetails.style.display = 'block';
-                deliveryInput.placeholder = 'Ej. Av. Lomas Verdes 123';
-                deliveryInput.required = true;
-            } else {
-                deliveryDetails.style.display = 'none';
-                deliveryInput.required = false;
-                deliveryInput.value = '';
-            }
-        }
-    }
-});
+        <section id="whatsapp">
+            <h2>Échate un clavado al Whats</h2>
+            <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
+            <a href="https://wa.me/1234567890" class="btn btn-whatsapp">Cáele al WhatsApp</a>
+        </section>
 
-// Toggle switch for school/delivery menu
-document.addEventListener('change', (e) => {
-    if (e.target.id === 'delivery-toggle') {
-        const schoolMenu = document.getElementById('school-menu');
-        const deliveryMenu = document.getElementById('delivery-menu');
-        const lunchLabel = document.getElementById('lunch-label');
-        const deliveryLabel = document.getElementById('delivery-label');
-        
-        // Clear orderItems and uncheck all checkboxes
-        Object.keys(orderItems).forEach(key => delete orderItems[key]);
-        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-        document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
-        
-        if (e.target.checked) {
-            schoolMenu.style.display = 'none';
-            deliveryMenu.style.display = 'block';
-            lunchLabel.classList.remove('active');
-            deliveryLabel.classList.add('active');
-            document.body.classList.remove('school-theme');
-            document.body.classList.add('delivery-theme');
-        } else {
-            schoolMenu.style.display = 'block';
-            deliveryMenu.style.display = 'none';
-            lunchLabel.classList.add('active');
-            deliveryLabel.classList.remove('active');
-            document.body.classList.remove('delivery-theme');
-            document.body.classList.add('school-theme');
-        }
-        updateBolsita();
-    }
-});
+        <section id="qr-code">
+            <h2>Escanea pa’l pedido</h2>
+            <img src="images/QR.png" alt="Código QR" width="150">
+            <p>¡Pásale el link a la banda!</p>
+        </section>
 
-// Form submission
-document.addEventListener('submit', (e) => {
-    if (e.target.id === 'custom-order-form') {
-        e.preventDefault();
-        const submitBtn = document.getElementById('submit-btn');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Enviando...';
+        <button id="order-btn" class="order-btn" disabled>¡Échale el Lonche!</button>
+    </main>
 
-        // Collect form data
-        const parentName = document.getElementById('parent-name').value;
-        const kidName = document.getElementById('kid-name').value;
-        let pickupTime = document.getElementById('pickup-time').value;
-        if (pickupTime === 'custom') {
-            pickupTime = document.getElementById('custom-time-input').value || 'Hora no especificada';
-        }
-        const payment = document.getElementById('payment').value;
-        const deliveryLocation = document.getElementById('delivery-location').value;
-        const deliveryDetails = document.getElementById('delivery-details-input').value;
-        const phoneNumber = document.getElementById('phone-number').value;
+    <footer>
+        <p>© 2025 Tortas de la Mimi | Naucalpan de Juárez, puro amor mexicano</p>
+    </footer>
 
-        // Combine delivery location and details
-        const deliveryEntry = deliveryLocation && deliveryDetails ? `${deliveryLocation}: ${deliveryDetails}` : '';
+    <!-- Order Preview Modal -->
+    <div id="order-preview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Tu Bolsita de Lonche</h2>
+            <div id="preview-items">Aún no hay nada en la bolsita</div>
+            <p id="preview-total">Total: $0 MXN</p>
+        </div>
+    </div>
 
-        // Collect selected items
-        const items = updateBolsita();
-        const total = parseFloat(document.getElementById('bolsita-total').textContent.replace('$', ''));
+    <!-- Order Form Modal -->
+    <div id="order-form-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Arma tu pedido</h2>
+            <form id="custom-order-form">
+                <label for="parent-name">Tu nombre:</label>
+                <input type="text" id="parent-name" name="entry.1069885003" required placeholder="Ej. Juan Pérez">
 
-        // Google Forms integration
-        const formData = new FormData();
-        formData.append('entry.1069885003', parentName);
-        formData.append('entry.1194295238', kidName);
-        formData.append('entry.1139898634', pickupTime);
-        formData.append('entry.1652796924', payment);
-        formData.append('entry.174677996', items.join(', '));
-        formData.append('entry.53053903', total);
-        formData.append('entry.1404862194', deliveryEntry);
-        formData.append('entry.499715070', phoneNumber);
+                <label for="kid-name">Nombre del pequeño:</label>
+                <input type="text" id="kid-name" name="entry.1194295238" required placeholder="Ej. Pepito">
 
-        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
-            method: 'POST',
-            body: formData
-        })
-        .then(() => {
-            // Show confirmation modal
-            const modal = document.getElementById('confirmation-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.innerHTML = `
-                ¡Échale, ${parentName}! <br>
-                El lonche pa’l pequeño ${kidName} ya está en camino: <br>
-                ${items.join('<br>')} <br>
-                Total: $${total} MXN <br>
-                Entrega: ${pickupTime} <br>
-                Lugar: ${deliveryEntry || 'No especificado'} <br>
-                Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
-                Teléfono: ${phoneNumber} <br>
-                ¡La Mimi ya está preparando esas tortas con puro amor!
-            `;
-            modal.style.display = 'flex';
-            document.getElementById('order-form-modal').style.display = 'none';
+                <label for="pickup-time">Hora de entrega:</label>
+                <select id="pickup-time" name="entry.1139898634" required>
+                    <option value="">Elige una hora</option>
+                    <option value="7:30 AM">7:30 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
+                    <option value="8:30 AM">8:30 AM</option>
+                    <option value="custom">Establecer otro horario</option>
+                </select>
 
-            // Confetti celebration
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#e74c3c', '#2ecc71', '#f1c40f']
-            });
+                <div id="custom-time" style="display: none;">
+                    <label for="custom-time-input">Especifica la hora:</label>
+                    <input type="text" id="custom-time-input" placeholder="Ej. 9:00 AM">
+                </div>
 
-            // Reset form and bolsita
-            e.target.reset();
-            Object.keys(orderItems).forEach(key => delete orderItems[key]);
-            document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-            document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
-            updateBolsita();
-            document.getElementById('custom-time').style.display = 'none';
-            document.getElementById('bank-details').style.display = 'none';
-            document.getElementById('delivery-details').style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Error submitting form:', error);
-            // Show success anyway to keep user experience smooth
-            const modal = document.getElementById('confirmation-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.innerHTML = `
-                ¡Échale, ${parentName}! <br>
-                El lonche pa’l pequeño ${kidName} ya está en camino: <br>
-                ${items.join('<br>')} <br>
-                Total: $${total} MXN <br>
-                Entrega: ${pickupTime} <br>
-                Lugar: ${deliveryEntry || 'No especificado'} <br>
-                Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
-                Teléfono: ${phoneNumber} <br>
-                ¡La Mimi ya está preparando esas tortas con puro amor!
-            `;
-            modal.style.display = 'flex';
-            document.getElementById('order-form-modal').style.display = 'none';
+                <label for="payment">Método de pago:</label>
+                <select id="payment" name="entry.1652796924" required>
+                    <option value="">Selecciona</option>
+                    <option value="cash">En efectivo (al recibir)</option>
+                    <option value="transfer">Transferencia bancaria</option>
+                </select>
 
-            // Confetti celebration
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#e74c3c', '#2ecc71', '#f1c40f']
-            });
+                <div id="bank-details" style="display: none;">
+                    <p>CLABE: 1234-5678-9012-3456 (Banco Chido)</p>
+                </div>
 
-            // Reset form and bolsita
-            e.target.reset();
-            Object.keys(orderItems).forEach(key => delete orderItems[key]);
-            document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-            document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
-            updateBolsita();
-            document.getElementById('custom-time').style.display = 'none';
-            document.getElementById('bank-details').style.display = 'none';
-            document.getElementById('delivery-details').style.display = 'none';
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.textContent = '¡Apedir el lonche!';
-        });
-    }
-});
+                <label for="delivery-location">Lugar de entrega:</label>
+                <select id="delivery-location" required>
+                    <option value="">Selecciona</option>
+                    <option value="En la escuela">En la escuela</option>
+                    <option value="Otro lugar">Otro lugar</option>
+                </select>
 
-// Modal close logic
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('close')) {
-        const modal = e.target.closest('.modal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    }
-});
+                <div id="delivery-details" style="display: none;">
+                    <label for="delivery-details-input">Especifica el lugar:</label>
+                    <input type="text" id="delivery-details-input" name="entry.1404862194" placeholder="Ej. Escuela Frida Kahlo" required>
+                </div>
 
-// Initialize bolsita and theme
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('school-theme');
-    updateBolsita();
-});
+                <label for="phone-number">Número de teléfono:</label>
+                <input type="tel" id="phone-number" name="entry.499715070" required placeholder="Ej. 5551234567">
+
+                <input type="hidden" id="items-input" name="entry.174677996">
+                <input type="hidden" id="total-input" name="entry.53053903">
+
+                <button type="submit" class="btn" id="submit-btn">¡Apedir el lonche!</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>¡Órale, pedido recibido!</h2>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
