@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tortas de la Mimi - Pide tu lonche</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <img src="images/Logo MyL.jpg" alt="Tortas de la Mimi Logo" class="logo">
-        <h1>Tortas de Mimi y Lalo</h1>
-        <p>Ordena el lonche de tu pequeño o comida pa’l antojo, ¡Vamos!</p>
+        <img src="images/Logo_My.png" alt="Sandwich Logo" class="logo sandwich-logo">
+        <h1 class="animated-title">Tortas de Mimi y Lalo</h1>
+        <p class="slogan">Olvídate de las filas y de no alcanzar la comida favorita de tu hijo, ¡ordena desde casa!</p>
         <div id="bolsita">
             <span class="bolsita-icon">🛍️</span>
             <span id="bolsita-count">0</span>
@@ -33,7 +33,7 @@
 
         <!-- School Lunch Menu -->
         <div id="school-menu" class="menu-container">
-            <section id="meals" class="menu-section">
+            <section id="meals" class="menu-section fade-in">
                 <h2>Tortas Pa’l Recreo</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -93,7 +93,7 @@
                 </div>
             </section>
 
-            <section id="sopas" class="menu-section">
+            <section id="sopas" class="menu-section fade-in">
                 <h2>Sopas y Combos</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -135,7 +135,7 @@
                 </div>
             </section>
 
-            <section id="frutas" class="menu-section">
+            <section id="frutas" class="menu-section fade-in">
                 <h2>Frutas y Ensaladas</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -213,7 +213,7 @@
                 </div>
             </section>
 
-            <section id="snacks" class="menu-section">
+            <section id="snacks" class="menu-section fade-in">
                 <h2>Dulces y Snacks</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -318,7 +318,7 @@
                 </div>
             </section>
 
-            <section id="drinks" class="menu-section">
+            <section id="drinks" class="menu-section fade-in">
                 <h2>Bebidas Pa’l Calor</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -528,7 +528,7 @@
                 </div>
             </section>
 
-            <section id="extras" class="menu-section">
+            <section id="extras" class="menu-section fade-in">
                 <h2>Extras Pa’l Día</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -564,7 +564,7 @@
 
         <!-- Delivery Menu -->
         <div id="delivery-menu" class="menu-container" style="display: none;">
-            <section id="delivery-meals" class="menu-section">
+            <section id="delivery-meals" class="menu-section fade-in">
                 <h2>Tortas Chingonas</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -633,7 +633,7 @@
                 </div>
             </section>
 
-            <section id="delivery-sincronizadas" class="menu-section">
+            <section id="delivery-sincronizadas" class="menu-section fade-in">
                 <h2>Sincronizadas y Hot Dogs</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -675,7 +675,7 @@
                 </div>
             </section>
 
-            <section id="delivery-desserts" class="menu-section">
+            <section id="delivery-desserts" class="menu-section fade-in">
                 <h2>Postres Caseros</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -699,7 +699,7 @@
                 </div>
             </section>
 
-            <section id="delivery-drinks" class="menu-section">
+            <section id="delivery-drinks" class="menu-section fade-in">
                 <h2>Bebidas Frescas</h2>
                 <div class="menu-scroll">
                     <div class="item">
@@ -743,6 +743,7 @@
             <h2>Échate un clavado al Whats</h2>
             <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
             <a href="https://wa.me/1234567890" class="btn btn-whatsapp">Cáele al WhatsApp</a>
+            <img src="images/Logo_MyL2.png" alt="Torta Logo" class="torta-logo">
         </section>
 
         <section id="qr-code">
@@ -751,7 +752,7 @@
             <p>¡Pásale el link a la banda!</p>
         </section>
 
-        <button id="order-btn" class="order-btn" disabled>¡Échale el Lonche!</button>
+        <button id="order-btn" class="order-btn bounce" disabled>¡Échale el Lonche!</button>
     </main>
 
     <footer>
@@ -777,8 +778,8 @@
                 <label for="parent-name">Tu nombre:</label>
                 <input type="text" id="parent-name" name="entry.1069885003" required placeholder="Ej. Juan Pérez">
 
-                <label for="kid-name">Nombre del pequeño:</label>
-                <input type="text" id="kid-name" name="entry.1194295238" required placeholder="Ej. Pepito">
+                <label for="special-details">¿Algún detalle especial para tu pedido?</label>
+                <input type="text" id="special-details" name="entry.1194295238" placeholder="Ej. Sin picante, por favor">
 
                 <label for="pickup-time">Hora de entrega:</label>
                 <select id="pickup-time" name="entry.1139898634" required>
