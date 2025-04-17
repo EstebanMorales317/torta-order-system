@@ -10,18 +10,29 @@ const updateBolsita = () => {
     const items = [];
 
     // Sync checkboxes and flavor selects with orderItems
-document.querySelectorAll('.item-checkbox').forEach(checkbox => {
-    const baseName = checkbox.getAttribute('data-name');
-    const flavorSelect = checkbox.closest('.item').querySelector('.flavor-select');
-    const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
-    const fullName = `${baseName}${flavor}`;
-    checkbox.checked = orderItems[fullName]?.quantity > 0;
-    if (flavorSelect && orderItems[fullName]) {
-        const savedFlavor = fullName.match(/\(.*?\)/)?.[0]?.slice(1, -1) || '';
-        flavorSelect.value = savedFlavor;
-    }
-});
-    
+    document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+        const baseName = checkbox.getAttribute('data-name');
+        const flavorSelect = checkbox.closest('.item').querySelector('.flavor-select');
+        const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
+        const fullName = `${baseName}${flavor}`;
+        checkbox.checked = orderItems[fullName]?.quantity > 0;
+        if (flavorSelect && orderItems[fullName]) {
+            const savedFlavor = fullName.match(/\(.*?\)/)?.[0]?.slice(1, -1) || '';
+            flavorSelect.value = savedFlavor;
+        }
+        // Show/hide quantity controls and update quantity display
+        const qtyControls = checkbox.closest('.custom-checkbox').querySelector('.quantity-controls');
+        const qtyDisplay = qtyControls.querySelector('.qty-display');
+        const orderBtn = checkbox.closest('.custom-checkbox').querySelector('.order-now-btn');
+        if (orderItems[fullName]?.quantity > 0) {
+            qtyControls.style.display = 'flex';
+            orderBtn.style.display = 'none';
+            qtyDisplay.textContent = orderItems[fullName].quantity;
+        } else {
+            qtyControls.style.display = 'none';
+            orderBtn.style.display = 'inline-block';
+        }
+    });
 
     // Aggregate items
     Object.keys(orderItems).forEach(name => {
