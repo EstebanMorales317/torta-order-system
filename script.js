@@ -9,7 +9,6 @@ const updateBolsita = () => {
     let total = 0;
     const items = [];
 
-    // Aggregate items
     Object.keys(orderItems).forEach(name => {
         const qty = orderItems[name].quantity;
         if (qty > 0) {
@@ -20,11 +19,8 @@ const updateBolsita = () => {
         }
     });
 
-    // Update bolsita badge
     bolsitaCount.textContent = count;
     bolsitaTotal.textContent = `$${total}`;
-
-    // Update preview modal
     if (items.length) {
         previewItems.innerHTML = items.map(item => `
             <div class="item-row">
@@ -40,12 +36,10 @@ const updateBolsita = () => {
     }
     document.getElementById('preview-total').textContent = `Total: $${total} MXN`;
 
-    // Update order button state
     orderBtn.disabled = count === 0;
     orderBtn.style.background = count > 0 ? '#FF6B6B' : '#7f8c8d';
     orderBtn.style.cursor = count > 0 ? 'pointer' : 'not-allowed';
 
-    // Animate bolsita
     const bolsita = document.getElementById('bolsita');
     bolsita.classList.add('pulse');
     setTimeout(() => bolsita.classList.remove('pulse'), 300);
@@ -53,7 +47,6 @@ const updateBolsita = () => {
     return items.map(item => `${item.name} ($${item.price}) x${item.qty}`);
 };
 
-// Checkbox change handler with flavor support
 document.addEventListener('change', (e) => {
     if (e.target.classList.contains('item-checkbox')) {
         const checkbox = e.target;
@@ -94,20 +87,11 @@ document.addEventListener('change', (e) => {
     }
 });
 
-// Bolsita preview modal
 document.addEventListener('click', (e) => {
     if (e.target.closest('#bolsita')) {
         const modal = document.getElementById('order-preview-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            console.error('Order preview modal not found');
-        }
+        modal.style.display = 'flex';
     }
-});
-
-// Quantity buttons in preview modal
-document.addEventListener('click', (e) => {
     if (e.target.classList.contains('qty-btn')) {
         const name = e.target.getAttribute('data-name');
         const isPlus = e.target.classList.contains('plus');
@@ -118,67 +102,41 @@ document.addEventListener('click', (e) => {
                 const checkbox = document.querySelector(`.item-checkbox[data-name="${name.split(' (')[0]}"]`);
                 if (checkbox) checkbox.checked = false;
             }
+            updateBolsita();
         }
-        updateBolsita();
     }
-});
-
-// Order button modal
-document.addEventListener('click', (e) => {
     if (e.target.id === 'order-btn' && !e.target.disabled) {
         const modal = document.getElementById('order-form-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-        } else {
-            console.error('Order form modal not found');
-        }
+        modal.style.display = 'flex';
+    }
+    if (e.target.classList.contains('close')) {
+        const modal = e.target.closest('.modal');
+        modal.style.display = 'none';
     }
 });
 
-// Custom pickup time toggle
 document.addEventListener('change', (e) => {
     if (e.target.id === 'pickup-time') {
-        const customTime = document.getElementById('custom-time');
-        if (customTime) {
-            customTime.style.display = e.target.value === 'custom' ? 'block' : 'none';
-        }
+        document.getElementById('custom-time').style.display = e.target.value === 'custom' ? 'block' : 'none';
     }
-});
-
-// Payment method toggle
-document.addEventListener('change', (e) => {
     if (e.target.id === 'payment') {
-        const bankDetails = document.getElementById('bank-details');
-        if (bankDetails) {
-            bankDetails.style.display = e.target.value === 'transfer' ? 'block' : 'none';
-        }
+        document.getElementById('bank-details').style.display = e.target.value === 'transfer' ? 'block' : 'none';
     }
-});
-
-// Delivery location toggle
-document.addEventListener('change', (e) => {
     if (e.target.id === 'delivery-location') {
         const deliveryDetails = document.getElementById('delivery-details');
         const deliveryInput = document.getElementById('delivery-details-input');
-        if (deliveryDetails && deliveryInput) {
-            if (e.target.value === 'En la escuela') {
-                deliveryDetails.style.display = 'block';
-                deliveryInput.placeholder = 'Ej. Escuela Frida Kahlo';
-                deliveryInput.required = true;
-            } else if (e.target.value === 'Otro lugar') {
-                deliveryDetails.style.display = 'block';
-                deliveryInput.placeholder = 'Ej. Av. Lomas Verdes 123';
-                deliveryInput.required = true;
-            } else {
-                deliveryDetails.style.display = 'none';
-                deliveryInput.required = false;
-                deliveryInput.value = '';
-            }
+        if (e.target.value === 'En la escuela' || e.target.value === 'Otro lugar') {
+            deliveryDetails.style.display = 'block';
+            deliveryInput.placeholder = e.target.value === 'En la escuela' ? 'Ej. Escuela Frida Kahlo' : 'Ej. Av. Lomas Verdes 123';
+            deliveryInput.required = true;
+        } else {
+            deliveryDetails.style.display = 'none';
+            deliveryInput.required = false;
+            deliveryInput.value = '';
         }
     }
 });
 
-// Toggle switch for school/delivery menu
 document.addEventListener('change', (e) => {
     if (e.target.id === 'delivery-toggle') {
         const schoolMenu = document.getElementById('school-menu');
@@ -191,22 +149,16 @@ document.addEventListener('change', (e) => {
             deliveryMenu.style.display = 'block';
             lunchLabel.classList.remove('active');
             deliveryLabel.classList.add('active');
-            document.body.classList.remove('school-theme');
-            document.body.classList.add('delivery-theme');
         } else {
             schoolMenu.style.display = 'block';
             deliveryMenu.style.display = 'none';
             lunchLabel.classList.add('active');
             deliveryLabel.classList.remove('active');
-            document.body.classList.remove('delivery-theme');
-            document.body.classList.add('school-theme');
         }
-        // No reset of orderItems to persist selections
         updateBolsita();
     }
 });
 
-// Form submission
 document.addEventListener('submit', (e) => {
     if (e.target.id === 'custom-order-form') {
         e.preventDefault();
@@ -214,7 +166,6 @@ document.addEventListener('submit', (e) => {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando...';
 
-        // Collect form data
         const parentName = document.getElementById('parent-name').value;
         const specialDetails = document.getElementById('special-details').value || 'Sin detalles';
         let pickupTime = document.getElementById('pickup-time').value;
@@ -226,14 +177,10 @@ document.addEventListener('submit', (e) => {
         const deliveryDetails = document.getElementById('delivery-details-input').value;
         const phoneNumber = document.getElementById('phone-number').value;
 
-        // Combine delivery location and details
         const deliveryEntry = deliveryLocation && deliveryDetails ? `${deliveryLocation}: ${deliveryDetails}` : '';
-
-        // Collect selected items
         const items = updateBolsita();
         const total = parseFloat(document.getElementById('bolsita-total').textContent.replace('$', ''));
 
-        // Google Forms integration
         const formData = new FormData();
         formData.append('entry.1069885003', parentName);
         formData.append('entry.1194295238', specialDetails);
@@ -249,7 +196,6 @@ document.addEventListener('submit', (e) => {
             body: formData
         })
         .then(() => {
-            // Show confirmation modal
             const modal = document.getElementById('confirmation-modal');
             const modalMessage = document.getElementById('modal-message');
             modalMessage.innerHTML = `
@@ -267,19 +213,17 @@ document.addEventListener('submit', (e) => {
             modal.style.display = 'flex';
             document.getElementById('order-form-modal').style.display = 'none';
 
-            // Confetti celebration
             confetti({
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#FF6B6B', '#1A3C34', '#FDF6E3']
+                colors: ['#FF6B6B', '#1A3C34', '#FFF8E7']
             });
 
-            // Reset form and bolsita
             e.target.reset();
             Object.keys(orderItems).forEach(key => delete orderItems[key]);
-            document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-            document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
+            document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.flavor-select').forEach(sel => sel.value = '');
             updateBolsita();
             document.getElementById('custom-time').style.display = 'none';
             document.getElementById('bank-details').style.display = 'none';
@@ -287,7 +231,6 @@ document.addEventListener('submit', (e) => {
         })
         .catch(error => {
             console.error('Error submitting form:', error);
-            // Show success anyway to keep user experience smooth
             const modal = document.getElementById('confirmation-modal');
             const modalMessage = document.getElementById('modal-message');
             modalMessage.innerHTML = `
@@ -305,19 +248,17 @@ document.addEventListener('submit', (e) => {
             modal.style.display = 'flex';
             document.getElementById('order-form-modal').style.display = 'none';
 
-            // Confetti celebration
             confetti({
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#FF6B6B', '#1A3C34', '#FDF6E3']
+                colors: ['#FF6B6B', '#1A3C34', '#FFF8E7']
             });
 
-            // Reset form and bolsita
             e.target.reset();
             Object.keys(orderItems).forEach(key => delete orderItems[key]);
-            document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-            document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
+            document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.flavor-select').forEach(sel => sel.value = '');
             updateBolsita();
             document.getElementById('custom-time').style.display = 'none';
             document.getElementById('bank-details').style.display = 'none';
@@ -330,18 +271,6 @@ document.addEventListener('submit', (e) => {
     }
 });
 
-// Modal close logic
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('close')) {
-        const modal = e.target.closest('.modal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    }
-});
-
-// Initialize bolsita and theme
 document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('school-theme');
     updateBolsita();
 });
