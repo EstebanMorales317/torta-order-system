@@ -9,6 +9,20 @@ const updateBolsita = () => {
     let total = 0;
     const items = [];
 
+    // Sync checkboxes and flavor selects with orderItems
+document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+    const baseName = checkbox.getAttribute('data-name');
+    const flavorSelect = checkbox.closest('.item').querySelector('.flavor-select');
+    const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
+    const fullName = `${baseName}${flavor}`;
+    checkbox.checked = orderItems[fullName]?.quantity > 0;
+    if (flavorSelect && orderItems[fullName]) {
+        const savedFlavor = fullName.match(/\(.*?\)/)?.[0]?.slice(1, -1) || '';
+        flavorSelect.value = savedFlavor;
+    }
+});
+    
+
     // Aggregate items
     Object.keys(orderItems).forEach(name => {
         const qty = orderItems[name].quantity;
@@ -186,10 +200,6 @@ document.addEventListener('change', (e) => {
         const lunchLabel = document.getElementById('lunch-label');
         const deliveryLabel = document.getElementById('delivery-label');
         
-        // Clear orderItems and uncheck all checkboxes
-        Object.keys(orderItems).forEach(key => delete orderItems[key]);
-        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-        document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
         
         if (e.target.checked) {
             schoolMenu.style.display = 'none';
