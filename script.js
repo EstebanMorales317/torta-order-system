@@ -78,6 +78,19 @@ const updateBolsita = () => {
     return items.map(item => `${item.name} ($${item.price}) x${item.qty}`);
 };
 
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('order-now-btn')) {
+        const checkbox = e.target.closest('.custom-checkbox').querySelector('.item-checkbox');
+        const flavorSelect = e.target.closest('.item').querySelector('.flavor-select');
+        if (flavorSelect && !flavorSelect.value) {
+            alert('Por favor, elige un sabor antes de añadir a la bolsita.');
+            return;
+        }
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event('change'));
+    }
+});
+
 // Checkbox change handler with flavor support
 document.addEventListener('change', (e) => {
     if (e.target.classList.contains('item-checkbox')) {
