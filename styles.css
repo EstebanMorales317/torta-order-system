@@ -247,12 +247,7 @@ input:checked + .slider:before {
 }
 
 .custom-checkbox input {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #e74c3c;
-    border-radius: 4px;
-    position: relative;
+    display: none;
 }
 
 .custom-checkbox input:checked {
@@ -269,21 +264,31 @@ input:checked + .slider:before {
     font-size: 10px;
 }
 
-.order-now-btn {
-    background: linear-gradient(45deg, #e74c3c, #c0392b);
+.order-btn {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #7f8c8d;
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
     font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+    z-index: 101;
     transition: background 0.3s, transform 0.2s;
 }
 
-.order-now-btn:hover {
-    background: linear-gradient(45deg, #c0392b, #e74c3c);
-    transform: translateY(-2px);
+.order-btn:not(:disabled) {
+    background: #2ecc71;
+    cursor: pointer;
+}
+
+.order-btn:not(:disabled):hover {
+    background: #27ae60;
+    transform: translateY(-3px);
 }
 
 .quantity-controls {
