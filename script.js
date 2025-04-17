@@ -42,7 +42,7 @@ const updateBolsita = () => {
 
     // Update order button state
     orderBtn.disabled = count === 0;
-    orderBtn.style.background = count > 0 ? '#2ecc71' : '#7f8c8d';
+    orderBtn.style.background = count > 0 ? '#FF6B6B' : '#7f8c8d';
     orderBtn.style.cursor = count > 0 ? 'pointer' : 'not-allowed';
 
     // Animate bolsita
@@ -186,11 +186,6 @@ document.addEventListener('change', (e) => {
         const lunchLabel = document.getElementById('lunch-label');
         const deliveryLabel = document.getElementById('delivery-label');
         
-        // Clear orderItems and uncheck all checkboxes
-        Object.keys(orderItems).forEach(key => delete orderItems[key]);
-        document.querySelectorAll('.item-checkbox').forEach(cb => (cb.checked = false));
-        document.querySelectorAll('.flavor-select').forEach(sel => (sel.value = ''));
-        
         if (e.target.checked) {
             schoolMenu.style.display = 'none';
             deliveryMenu.style.display = 'block';
@@ -206,6 +201,7 @@ document.addEventListener('change', (e) => {
             document.body.classList.remove('delivery-theme');
             document.body.classList.add('school-theme');
         }
+        // No reset of orderItems to persist selections
         updateBolsita();
     }
 });
@@ -220,7 +216,7 @@ document.addEventListener('submit', (e) => {
 
         // Collect form data
         const parentName = document.getElementById('parent-name').value;
-        const kidName = document.getElementById('kid-name').value;
+        const specialDetails = document.getElementById('special-details').value || 'Sin detalles';
         let pickupTime = document.getElementById('pickup-time').value;
         if (pickupTime === 'custom') {
             pickupTime = document.getElementById('custom-time-input').value || 'Hora no especificada';
@@ -240,7 +236,7 @@ document.addEventListener('submit', (e) => {
         // Google Forms integration
         const formData = new FormData();
         formData.append('entry.1069885003', parentName);
-        formData.append('entry.1194295238', kidName);
+        formData.append('entry.1194295238', specialDetails);
         formData.append('entry.1139898634', pickupTime);
         formData.append('entry.1652796924', payment);
         formData.append('entry.174677996', items.join(', '));
@@ -258,11 +254,12 @@ document.addEventListener('submit', (e) => {
             const modalMessage = document.getElementById('modal-message');
             modalMessage.innerHTML = `
                 ¡Échale, ${parentName}! <br>
-                El lonche pa’l pequeño ${kidName} ya está en camino: <br>
+                Tu pedido ya está en camino: <br>
                 ${items.join('<br>')} <br>
                 Total: $${total} MXN <br>
                 Entrega: ${pickupTime} <br>
                 Lugar: ${deliveryEntry || 'No especificado'} <br>
+                Detalles: ${specialDetails} <br>
                 Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
                 Teléfono: ${phoneNumber} <br>
                 ¡La Mimi ya está preparando esas tortas con puro amor!
@@ -275,7 +272,7 @@ document.addEventListener('submit', (e) => {
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#e74c3c', '#2ecc71', '#f1c40f']
+                colors: ['#FF6B6B', '#1A3C34', '#FDF6E3']
             });
 
             // Reset form and bolsita
@@ -295,11 +292,12 @@ document.addEventListener('submit', (e) => {
             const modalMessage = document.getElementById('modal-message');
             modalMessage.innerHTML = `
                 ¡Échale, ${parentName}! <br>
-                El lonche pa’l pequeño ${kidName} ya está en camino: <br>
+                Tu pedido ya está en camino: <br>
                 ${items.join('<br>')} <br>
                 Total: $${total} MXN <br>
                 Entrega: ${pickupTime} <br>
                 Lugar: ${deliveryEntry || 'No especificado'} <br>
+                Detalles: ${specialDetails} <br>
                 Pago: ${payment === 'cash' ? 'En efectivo' : 'Transferencia'} <br>
                 Teléfono: ${phoneNumber} <br>
                 ¡La Mimi ya está preparando esas tortas con puro amor!
@@ -312,7 +310,7 @@ document.addEventListener('submit', (e) => {
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#e74c3c', '#2ecc71', '#f1c40f']
+                colors: ['#FF6B6B', '#1A3C34', '#FDF6E3']
             });
 
             // Reset form and bolsita
