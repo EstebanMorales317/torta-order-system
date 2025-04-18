@@ -163,7 +163,7 @@ document.getElementById('order-btn').addEventListener('click', openOrderModal);
 
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', () => {
-        modals.forEach(modal => {
+        document.querySelectorAll('.modal').forEach(modal => {
             const modalContent = modal.querySelector('.modal-content');
             modalContent.classList.add('closing');
             setTimeout(() => {
@@ -176,17 +176,14 @@ document.querySelectorAll('.close').forEach(closeBtn => {
 
 window.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
-        modals.forEach(modal => {
-            const modalContent = modal.querySelector('.modal-content');
-            modalContent.classList.add('closing');
-            setTimeout(() => {
-                modal.style.display = 'none';
-                modalContent.classList.remove('closing');
-            }, 300);
-        });
+        const modalContent = e.target.querySelector('.modal-content');
+        modalContent.classList.add('closing');
+        setTimeout(() => {
+            e.target.style.display = 'none';
+            modalContent.classList.remove('closing');
+        }, 300);
     }
 });
-
 
 // Form handling
 document.getElementById('pickup-time').addEventListener('change', (e) => {
