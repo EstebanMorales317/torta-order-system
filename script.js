@@ -148,7 +148,6 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 });
 
 // Modal handling
-const modals = document.querySelectorAll('.modal');
 const openOrderModal = () => {
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
@@ -165,7 +164,6 @@ document.getElementById('bolsita').addEventListener('click', () => {
     modalContent.classList.remove('closing');
     modal.style.display = 'block';
 });
-});
 
 document.getElementById('order-btn').addEventListener('click', openOrderModal);
 
@@ -177,10 +175,9 @@ document.querySelectorAll('.close').forEach(closeBtn => {
             setTimeout(() => {
                 modal.style.display = 'none';
                 modalContent.classList.remove('closing');
-            }, 300); // Match animation duration
+            }, 300);
         });
     });
-});
 });
 
 window.addEventListener('click', (e) => {
@@ -195,6 +192,7 @@ window.addEventListener('click', (e) => {
         });
     }
 });
+
 
 // Form handling
 document.getElementById('pickup-time').addEventListener('change', (e) => {
