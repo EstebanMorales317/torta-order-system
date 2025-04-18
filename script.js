@@ -150,27 +150,49 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 // Modal handling
 const modals = document.querySelectorAll('.modal');
 const openOrderModal = () => {
-    document.getElementById('order-form-modal').style.display = 'block';
+    const modal = document.getElementById('order-form-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    modalContent.classList.remove('closing');
+    modal.style.display = 'block';
     const items = updateBolsita();
     document.getElementById('items-input').value = items.join(', ');
     document.getElementById('total-input').value = document.getElementById('preview-total').textContent.replace('Total: $', '').replace(' MXN', '');
 };
 
 document.getElementById('bolsita').addEventListener('click', () => {
-    document.getElementById('order-preview-modal').style.display = 'block';
+    const modal = document.getElementById('order-preview-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    modalContent.classList.remove('closing');
+    modal.style.display = 'block';
+});
 });
 
 document.getElementById('order-btn').addEventListener('click', openOrderModal);
 
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', () => {
-        modals.forEach(modal => modal.style.display = 'none');
+        modals.forEach(modal => {
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.classList.add('closing');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modalContent.classList.remove('closing');
+            }, 300); // Match animation duration
+        });
     });
+});
 });
 
 window.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
-        modals.forEach(modal => modal.style.display = 'none');
+        modals.forEach(modal => {
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.classList.add('closing');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modalContent.classList.remove('closing');
+            }, 300);
+        });
     }
 });
 
