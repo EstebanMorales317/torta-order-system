@@ -295,6 +295,7 @@ input:checked + .slider:before {
     background: rgba(0, 0, 0, 0.5);
     align-items: center;
     justify-content: center;
+    z-index: 999;
 }
 
 .modal-content {
@@ -304,6 +305,8 @@ input:checked + .slider:before {
     max-width: 500px;
     width: 90%;
     position: relative;
+    max-height: 80vh; /* Limits height to 80% of viewport */
+    overflow-y: auto; /* Adds vertical scroll if content overflows */
 }
 
 .close {
