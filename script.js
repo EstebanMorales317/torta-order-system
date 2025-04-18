@@ -62,13 +62,15 @@ const updateBolsita = () => {
 
     // Update order button state
     orderBtn.disabled = count === 0;
-    orderBtn.style.background = count > 0 ? '#2ecc71' : '#7f8c8d';
+    orderBtn.style.background = count > 0 ? 'linear-gradient(45deg, #e74c3c, #f1c40f)' : '#7f8c8d';
     orderBtn.style.cursor = count > 0 ? 'pointer' : 'not-allowed';
 
     // Animate bolsita
-    const bolsita = document.getElementById('bolsita');
-    bolsita.classList.add('pulse');
-    setTimeout(() => bolsita.classList.remove('pulse'), 300);
+    if (count > 0) {
+        const bolsita = document.getElementById('bolsita');
+        bolsita.classList.add('pulse');
+        setTimeout(() => bolsita.classList.remove('pulse'), 300);
+    }
 
     return items.map(item => `${item.name} ($${item.price}) x${item.qty}`);
 };
@@ -143,6 +145,7 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 
 // Modal handling
 const openOrderModal = () => {
+    if (Object.keys(orderItems).length === 0) return; // Prevent opening if bolsita is empty
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
@@ -159,7 +162,12 @@ document.getElementById('bolsita').addEventListener('click', () => {
     modal.style.display = 'block';
 });
 
-document.getElementById('order-btn').addEventListener('click', openOrderModal);
+document.getElementById('order-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!document.getElementById('order-btn').disabled) {
+        openOrderModal();
+    }
+});
 
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', () => {
@@ -226,6 +234,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
     const formData = new FormData(form);
     formData.set('entry.1139898634', pickupTime === 'custom' ? customTime : pickupTime);
     formData.set('entry.1404862194', deliveryDetails);
+
     try {
         await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
@@ -233,9 +242,14 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             mode: 'no-cors'
         });
 
+        // Close form modal
         document.getElementById('order-form-modal').style.display = 'none';
+
+        // Open confirmation modal with animation
         const confirmationModal = document.getElementById('confirmation-modal');
-        document.getElementById('modal-message').textContent = `¡Échale! Tu pedido pa’l lonche ya está en camino. Te llegará un mensaje por WhatsApp pa’ confirmar.`;
+        const modalContent = confirmationModal.querySelector('.modal-content');
+        modalContent.classList.remove('closing');
+        document.getElementById('modal-message').textContent = `¡Échale! Tu pedido pa’l lonche ya está en camino 🌮. Te llegará un mensaje por WhatsApp pa’ confirmar.`;
         confirmationModal.style.display = 'block';
 
         confetti({
@@ -244,6 +258,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             origin: { y: 0.6 }
         });
 
+        // Reset order
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
         form.reset();
@@ -254,6 +269,11 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
         console.error('Error submitting form:', error);
         alert('¡Órale! Algo salió mal. Porfa, intenta de nuevo o márcale al Whats.');
     }
+});
+
+// Ensure modals are closed on page load
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.style.display = 'none';
 });
 
 // Initialize
