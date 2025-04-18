@@ -49,9 +49,10 @@ header p {
 }
 
 main {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .toggle-container {
@@ -149,9 +150,11 @@ input:checked + .slider:before {
 .menu-scroll {
     display: flex;
     overflow-x: auto;
-    gap: 20px;
-    padding: 20px 0;
+    gap: 15px;
+    padding: 15px 0;
     scrollbar-width: thin;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .menu-scroll::-webkit-scrollbar {
@@ -164,12 +167,14 @@ input:checked + .slider:before {
 }
 
 .item {
-    flex: 0 0 300px;
+    flex: 0 0 280px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
     text-align: center;
+    min-width: 250px;
+    max-width: 90%;
 }
 
 .item img {
@@ -203,27 +208,32 @@ input:checked + .slider:before {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #2ecc71;
+    background: linear-gradient(45deg, #e74c3c, #f1c40f);
     color: white;
-    padding: 12px 24px;
-    border-radius: 25px;
+    padding: 15px 30px;
+    border-radius: 30px;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    font-weight: bold;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: none;
     cursor: pointer;
+    animation: pulseButton 2s ease infinite;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .order-btn:hover {
-    background: #27ae60;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 .order-btn:disabled {
     background: #7f8c8d;
     cursor: not-allowed;
     transform: translateX(-50%);
+    animation: none;
 }
 .quantity-controls {
     display: flex;
@@ -307,6 +317,7 @@ input:checked + .slider:before {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
+    display: flex;
     align-items: center;
     justify-content: center;
     z-index: 999;
@@ -316,12 +327,13 @@ input:checked + .slider:before {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    max-width: 500px;
-    width: 90%;
+    max-width: 90%;
+    width: 500px;
     position: relative;
     max-height: 80vh;
     overflow-y: auto;
     animation: fadeInScale 0.3s ease forwards;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content.closing {
@@ -399,29 +411,26 @@ footer {
 
 @media (max-width: 768px) {
     .item {
-        flex: 0 0 250px;
+        flex: 0 0 240px;
+        min-width: 220px;
+        max-width: 95%;
     }
-
     .menu-scroll {
-        padding: 10px 0;
+        padding: 10px 5px;
     }
-
     h1 {
-        font-size: 2em;
+        font-size: 1.8em;
     }
-
     .toggle-labels span {
-        font-size: 1em;
+        font-size: 0.9em;
     }
-
     .order-now-btn {
         padding: 8px 16px;
-        font-size: 1em;
+        font-size: 0.9em;
     }
-
     #bolsita {
-        padding: 8px 15px;
-        font-size: 1em;
+        padding: 8px 12px;
+        font-size: 0.9em;
     }
 }
 
@@ -455,5 +464,20 @@ footer {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes pulseButton {
+    0% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.08);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 }
