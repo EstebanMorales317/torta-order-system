@@ -132,6 +132,10 @@ input:checked + .slider:before {
     font-weight: bold;
 }
 
+.menu-container {
+    display: block;
+}
+
 .menu-section {
     margin: 40px 0;
 }
