@@ -115,17 +115,11 @@ document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     const lunchLabel = document.getElementById('lunch-label');
     const deliveryLabel = document.getElementById('delivery-label');
 
-    if (e.target.checked) {
-        schoolMenu.style.display = 'none';
-        deliveryMenu.style.display = 'block';
-        lunchLabel.classList.remove('active');
-        deliveryLabel.classList.add('active');
-    } else {
-        schoolMenu.style.display = 'block';
-        deliveryMenu.style.display = 'none';
-        lunchLabel.classList.add('active');
-        deliveryLabel.classList.remove('active');
-    }
+    schoolMenu.style.display = e.target.checked ? 'none' : 'block';
+    deliveryMenu.style.display = e.target.checked ? 'block' : 'none';
+    lunchLabel.classList.toggle('active', !e.target.checked);
+    deliveryLabel.classList.toggle('active', e.target.checked);
+
     updateBolsita();
 });
 
