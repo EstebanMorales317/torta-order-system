@@ -188,10 +188,17 @@ document.getElementById('payment').addEventListener('change', (e) => {
 document.getElementById('delivery-location').addEventListener('change', (e) => {
     const deliveryDetails = document.getElementById('delivery-details');
     const deliveryDetailsInput = document.getElementById('delivery-details-input');
-    deliveryDetails.style.display = e.target.value === 'Otro lugar' ? 'block' : 'none';
-    deliveryDetailsInput.required = e.target.value === 'Otro lugar';
+    const deliveryDetailsLabel = document.getElementById('delivery-details-label');
+    deliveryDetails.style.display = e.target.value ? 'block' : 'none';
+    deliveryDetailsInput.required = e.target.value !== '';
     if (e.target.value === 'En la escuela') {
-        deliveryDetailsInput.value = 'Escuela';
+        deliveryDetailsLabel.textContent = '¿En qué escuela?';
+        deliveryDetailsInput.placeholder = 'Ej. Escuela Frida Kahlo';
+        deliveryDetailsInput.value = '';
+    } else if (e.target.value === 'Otro lugar') {
+        deliveryDetailsLabel.textContent = '¿Cuál es tu dirección?';
+        deliveryDetailsInput.placeholder = 'Ej. Calle 5 de Mayo #123';
+        deliveryDetailsInput.value = '';
     } else {
         deliveryDetailsInput.value = '';
     }
@@ -207,12 +214,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
 
     const formData = new FormData(form);
     formData.set('entry.1139898634', pickupTime === 'custom' ? customTime : pickupTime);
-    if (deliveryLocation === 'En la escuela') {
-        formData.set('entry.1404862194', 'Escuela');
-    } else {
-        formData.set('entry.1404862194', deliveryDetails);
-    }
-
+    formData.set('entry.1404862194', deliveryDetails);
     try {
         await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
