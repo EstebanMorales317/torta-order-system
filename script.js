@@ -98,12 +98,24 @@ document.addEventListener('click', (e) => {
 // Handle quantity buttons
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('qty-btn')) {
-        const name = e.target.getAttribute('data-name');
+        const item = e.target.closest('.item') || e.target.closest('.item-row');
+        const baseName = e.target.getAttribute('data-name');
         const isPlus = e.target.classList.contains('plus');
-        if (orderItems[name]) {
-            orderItems[name].quantity += isPlus ? 1 : -1;
-            if (orderItems[name].quantity <= 0) {
-                delete orderItems[name];
+        
+        // For modal quantity controls, use the exact name
+        let fullName = baseName;
+        
+        // For item quantity controls, check for flavor
+        if (item.classList.contains('item')) {
+            const flavorSelect = item.querySelector('.flavor-select');
+            const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
+            fullName = `${baseName}${flavor}`;
+        }
+
+        if (orderItems[fullName]) {
+            orderItems[fullName].quantity += isPlus ? 1 : -1;
+            if (orderItems[fullName].quantity <= 0) {
+                delete orderItems[fullName];
             }
             updateBolsita();
         }
@@ -131,13 +143,16 @@ document.querySelectorAll('.flavor-select').forEach(select => {
         const item = e.target.closest('.item');
         const baseName = item.querySelector('.order-now-btn').getAttribute('data-name');
         const oldFullName = Object.keys(orderItems).find(key => key.startsWith(baseName));
+        const newFlavor = e.target.value ? ` (${e.target.value})` : '';
+        const newFullName = `${baseName}${newFlavor}`;
+
         if (oldFullName && orderItems[oldFullName]) {
             const qty = orderItems[oldFullName].quantity;
             const price = orderItems[oldFullName].price;
             delete orderItems[oldFullName];
-            const newFlavor = e.target.value ? ` (${e.target.value})` : '';
-            const newFullName = `${baseName}${newFlavor}`;
-            orderItems[newFullName] = { quantity: qty, price };
+            if (e.target.value) { // Only update if a flavor is selected
+                orderItems[newFullName] = { quantity: qty, price };
+            }
             updateBolsita();
         }
     });
@@ -145,7 +160,7 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 
 // Modal handling
 const openOrderModal = () => {
-    if (Object.keys(orderItems).length === 0) return; // Prevent opening if bolsita is empty
+    if (Object.keys(orderItems).length === 0) return;
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
@@ -242,10 +257,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             mode: 'no-cors'
         });
 
-        // Close form modal
         document.getElementById('order-form-modal').style.display = 'none';
 
-        // Open confirmation modal with animation
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalContent = confirmationModal.querySelector('.modal-content');
         modalContent.classList.remove('closing');
@@ -258,7 +271,6 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             origin: { y: 0.6 }
         });
 
-        // Reset order
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
         form.reset();
@@ -271,10 +283,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
     }
 });
 
-// Ensure modals are closed on page load
 document.querySelectorAll('.modal').forEach(modal => {
     modal.style.display = 'none';
 });
 
-// Initialize
 updateBolsita();
