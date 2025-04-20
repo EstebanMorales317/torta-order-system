@@ -1,5 +1,18 @@
 const orderItems = {};
 
+const initializeModals = () => {
+    // Hide all modals on page load
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+        modal.style.opacity = '0';
+        modal.classList.remove('active');
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.classList.remove('closing');
+        }
+    });
+};
+
 const updateBolsita = () => {
     const bolsitaCount = document.getElementById('bolsita-count');
     const bolsitaTotal = document.getElementById('bolsita-total');
@@ -150,7 +163,7 @@ document.querySelectorAll('.flavor-select').forEach(select => {
             const qty = orderItems[oldFullName].quantity;
             const price = orderItems[oldFullName].price;
             delete orderItems[oldFullName];
-            if (e.target.value) { // Only update if a flavor is selected
+            if (e.target.value) {
                 orderItems[newFullName] = { quantity: qty, price };
             }
             updateBolsita();
@@ -165,46 +178,53 @@ const openOrderModal = () => {
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
     modal.style.display = 'block';
+    modal.style.opacity = '1';
+    modal.classList.add('active');
     const items = updateBolsita();
     document.getElementById('items-input').value = items.join(', ');
     document.getElementById('total-input').value = document.getElementById('preview-total').textContent.replace('Total: $', '').replace(' MXN', '');
 };
 
+const closeAllModals = () => {
+    document.querySelectorAll('.modal').forEach(modal => {
+        const modalContent = modal.querySelector('.modal-content');
+        modalContent.classList.add('closing');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.style.opacity = '0';
+            modal.classList.remove('active');
+            modalContent.classList.remove('closing');
+        }, 300);
+    });
+};
+
 document.getElementById('bolsita').addEventListener('click', () => {
+    closeAllModals(); // Close any open modals first
     const modal = document.getElementById('order-preview-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
     modal.style.display = 'block';
+    modal.style.opacity = '1';
+    modal.classList.add('active');
 });
 
 document.getElementById('order-btn').addEventListener('click', (e) => {
     e.preventDefault();
     if (!document.getElementById('order-btn').disabled) {
+        closeAllModals(); // Close any open modals first
         openOrderModal();
     }
 });
 
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', () => {
-        document.querySelectorAll('.modal').forEach(modal => {
-            const modalContent = modal.querySelector('.modal-content');
-            modalContent.classList.add('closing');
-            setTimeout(() => {
-                modal.style.display = 'none';
-                modalContent.classList.remove('closing');
-            }, 300);
-        });
+        closeAllModals();
     });
 });
 
 window.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
-        const modalContent = e.target.querySelector('.modal-content');
-        modalContent.classList.add('closing');
-        setTimeout(() => {
-            e.target.style.display = 'none';
-            modalContent.classList.remove('closing');
-        }, 300);
+        closeAllModals();
     }
 });
 
@@ -257,13 +277,14 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             mode: 'no-cors'
         });
 
-        document.getElementById('order-form-modal').style.display = 'none';
-
+        closeAllModals(); // Close all modals before showing confirmation
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalContent = confirmationModal.querySelector('.modal-content');
         modalContent.classList.remove('closing');
         document.getElementById('modal-message').textContent = `¡Échale! Tu pedido pa’l lonche ya está en camino 🌮. Te llegará un mensaje por WhatsApp pa’ confirmar.`;
         confirmationModal.style.display = 'block';
+        confirmationModal.style.opacity = '1';
+        confirmationModal.classList.add('active');
 
         confetti({
             particleCount: 100,
@@ -283,8 +304,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
     }
 });
 
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.style.display = 'none';
+// Initialize modals on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeModals();
+    updateBolsita();
 });
-
-updateBolsita();
