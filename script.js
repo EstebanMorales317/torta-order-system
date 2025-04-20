@@ -174,13 +174,15 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 // Modal handling
 const openOrderModal = () => {
     if (Object.keys(orderItems).length === 0) return;
-    closeAllModals(); // Close any open modals first
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
+    if (modal.classList.contains('active')) return; // Prevent re-opening if already open
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
-    modal.style.opacity = '1';
-    modal.classList.add('active');
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.classList.add('active');
+    }, 10); // Slight delay to ensure display is set
     const items = updateBolsita();
     document.getElementById('items-input').value = items.join(', ');
     document.getElementById('total-input').value = document.getElementById('preview-total').textContent.replace('Total: $', '').replace(' MXN', '');
@@ -218,6 +220,7 @@ document.getElementById('bolsita').addEventListener('click', (e) => {
 });
 
 document.getElementById('order-btn').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event bubbling
     e.preventDefault();
     if (!document.getElementById('order-btn').disabled) {
         openOrderModal();
@@ -232,8 +235,8 @@ document.querySelectorAll('.close').forEach(closeBtn => {
 });
 
 window.addEventListener('click', (e) => {
-    // Ignore clicks originating from bolsita or its children
-    if (e.target.closest('#bolsita')) return;
+    // Ignore clicks originating from bolsita, order-btn, or their children
+    if (e.target.closest('#bolsita') || e.target.closest('#order-btn')) return;
     // Only close if clicking on modal background, not inside modal-content
     if (e.target.classList.contains('modal')) {
         const modalContent = e.target.querySelector('.modal-content');
