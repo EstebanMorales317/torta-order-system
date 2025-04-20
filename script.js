@@ -147,6 +147,13 @@ document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     lunchLabel.classList.toggle('active', !e.target.checked);
     deliveryLabel.classList.toggle('active', e.target.checked);
 
+    // Toggle background color
+    if (e.target.checked) {
+        body.classList.add('delivery-mode');
+    } else {
+        body.classList.remove('delivery-mode');
+    }
+
     updateBolsita();
 });
 
