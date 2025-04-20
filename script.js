@@ -343,4 +343,5 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
 document.addEventListener('DOMContentLoaded', () => {
     initializeModals();
     updateBolsita();
+    document.getElementById('school-menu').classList.add('active'); // Set initial active menu
 });
