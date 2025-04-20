@@ -156,6 +156,14 @@ input:checked + .slider:before {
 
 .menu-container {
     display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.menu-container.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .menu-section {
