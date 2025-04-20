@@ -200,9 +200,10 @@ const closeAllModals = () => {
 };
 
 const openBolsitaModal = () => {
-    closeAllModals(); // Close any open modals first
     const modal = document.getElementById('order-preview-modal');
     const modalContent = modal.querySelector('.modal-content');
+    if (modal.classList.contains('active')) return; // Prevent re-opening if already open
+    closeAllModals(); // Close any other modals
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
     modal.style.opacity = '1';
@@ -211,6 +212,7 @@ const openBolsitaModal = () => {
 
 document.getElementById('bolsita').addEventListener('click', (e) => {
     e.stopPropagation(); // Prevent event bubbling
+    e.preventDefault(); // Prevent any default behavior
     openBolsitaModal();
 });
 
@@ -222,13 +224,14 @@ document.getElementById('order-btn').addEventListener('click', (e) => {
 });
 
 document.querySelectorAll('.close').forEach(closeBtn => {
-    closeBtn.addEventListener('click', () => {
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent bubbling
         closeAllModals();
     });
 });
 
 window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal')) {
+    if (e.target.classList.contains('modal') && !e.target.querySelector('.modal-content').contains(e.target)) {
         closeAllModals();
     }
 });
