@@ -174,10 +174,11 @@ document.querySelectorAll('.flavor-select').forEach(select => {
 // Modal handling
 const openOrderModal = () => {
     if (Object.keys(orderItems).length === 0) return;
+    closeAllModals(); // Close any open modals first
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
     modal.style.opacity = '1';
     modal.classList.add('active');
     const items = updateBolsita();
@@ -198,20 +199,24 @@ const closeAllModals = () => {
     });
 };
 
-document.getElementById('bolsita').addEventListener('click', () => {
+const openBolsitaModal = () => {
     closeAllModals(); // Close any open modals first
     const modal = document.getElementById('order-preview-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
     modal.style.opacity = '1';
     modal.classList.add('active');
+};
+
+document.getElementById('bolsita').addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event bubbling
+    openBolsitaModal();
 });
 
 document.getElementById('order-btn').addEventListener('click', (e) => {
     e.preventDefault();
     if (!document.getElementById('order-btn').disabled) {
-        closeAllModals(); // Close any open modals first
         openOrderModal();
     }
 });
@@ -282,7 +287,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
         const modalContent = confirmationModal.querySelector('.modal-content');
         modalContent.classList.remove('closing');
         document.getElementById('modal-message').textContent = `¡Échale! Tu pedido pa’l lonche ya está en camino 🌮. Te llegará un mensaje por WhatsApp pa’ confirmar.`;
-        confirmationModal.style.display = 'block';
+        confirmationModal.style.display = 'flex';
         confirmationModal.style.opacity = '1';
         confirmationModal.classList.add('active');
 
