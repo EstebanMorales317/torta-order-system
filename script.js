@@ -136,23 +136,33 @@ document.addEventListener('click', (e) => {
 });
 
 // Toggle between menus
+// Toggle between menus
 document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     const schoolMenu = document.getElementById('school-menu');
     const deliveryMenu = document.getElementById('delivery-menu');
     const lunchLabel = document.getElementById('lunch-label');
     const deliveryLabel = document.getElementById('delivery-label');
+    const body = document.body;
 
-    schoolMenu.style.display = e.target.checked ? 'none' : 'block';
-    deliveryMenu.style.display = e.target.checked ? 'block' : 'none';
-    lunchLabel.classList.toggle('active', !e.target.checked);
-    deliveryLabel.classList.toggle('active', e.target.checked);
+    // Remove active class from both initially
+    schoolMenu.classList.remove('active');
+    deliveryMenu.classList.remove('active');
 
-    // Toggle background color
+    // Update display and active class
     if (e.target.checked) {
+        schoolMenu.style.display = 'none';
+        deliveryMenu.style.display = 'block';
+        deliveryMenu.classList.add('active');
         body.classList.add('delivery-mode');
     } else {
+        schoolMenu.style.display = 'block';
+        deliveryMenu.style.display = 'none';
+        schoolMenu.classList.add('active');
         body.classList.remove('delivery-mode');
     }
+
+    lunchLabel.classList.toggle('active', !e.target.checked);
+    deliveryLabel.classList.toggle('active', e.target.checked);
 
     updateBolsita();
 });
