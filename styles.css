@@ -11,6 +11,11 @@ body {
     overflow-x: hidden;
     width: 100vw;
     box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+body.delivery-mode {
+    background: #d3d3d3; /* Darker gray for delivery mode */
 }
 
 header {
