@@ -203,11 +203,12 @@ const openBolsitaModal = () => {
     const modal = document.getElementById('order-preview-modal');
     const modalContent = modal.querySelector('.modal-content');
     if (modal.classList.contains('active')) return; // Prevent re-opening if already open
-    closeAllModals(); // Close any other modals
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
-    modal.style.opacity = '1';
-    modal.classList.add('active');
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.classList.add('active');
+    }, 10); // Slight delay to ensure display is set
 };
 
 document.getElementById('bolsita').addEventListener('click', (e) => {
@@ -231,8 +232,14 @@ document.querySelectorAll('.close').forEach(closeBtn => {
 });
 
 window.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal') && !e.target.querySelector('.modal-content').contains(e.target)) {
-        closeAllModals();
+    // Ignore clicks originating from bolsita or its children
+    if (e.target.closest('#bolsita')) return;
+    // Only close if clicking on modal background, not inside modal-content
+    if (e.target.classList.contains('modal')) {
+        const modalContent = e.target.querySelector('.modal-content');
+        if (!modalContent.contains(e.target)) {
+            closeAllModals();
+        }
     }
 });
 
