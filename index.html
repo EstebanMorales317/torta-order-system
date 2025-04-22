@@ -10,8 +10,8 @@
 <body>
     <header>
         <img src="images/Logo MyL.jpg" alt="Tortas de la Mimi Logo" class="logo">
-        <h1>Tortas de Mimi y Lalo</h1>
-        <p>Ordena el lonche de tu pequeño o comida pa’l antojo, ¡Vamos!</p>
+        <h1>Tortas de la Mimi y el Lalo</h1>
+        <p>¡Arma el lonche de tu peque: fácil, rico y saludable, sin filas ni estrés! Además ¡Pide antojitos, desayunos o comida para ti con la calidad de siempre!</p>
         <div id="bolsita">
             <span class="bolsita-icon">🛍️</span>
             <span id="bolsita-count">0</span>
@@ -27,7 +27,7 @@
             <input type="checkbox" id="delivery-toggle">
             <span class="slider"></span>
         </label>
-        <span id="delivery-label">Comida para entrega</span>
+        <span id="delivery-label">Comida para entregar</span>
     </div>
 </div>
 
@@ -38,7 +38,7 @@
                 <div class="menu-scroll">
                     <div class="item">
                         <img src="images/torta.jpeg" alt="Torta Salchichona">
-                        <h3>Torta Salchichona - $20</h3>
+                        <h3>Torta de Salchicha - $20</h3>
                         <p>Frijoles refritos, salchicha de pavo, queso blanco, mayonesa</p>
                         <div class="order-controls">
                             <button class="order-now-btn" data-name="Torta Salchichona" data-price="20">Ordena Ahora</button>
@@ -803,7 +803,7 @@
                     </div>
                     <div class="item">
                         <img src="images/torta.jpeg" alt="Torta Completa de Salchicha">
-                        <h3>Torta Completa de Salchicha - $35</h3>
+                        <h3>Torta Completa Salchichona - $35</h3>
                         <p>Salchicha de pavo, frijoles refritos, queso Oaxaca, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
                         <div class="order-controls">
                             <button class="order-now-btn" data-name="Torta Completa de Salchicha" data-price="35">Ordena Ahora</button>
@@ -900,7 +900,7 @@
                     </div>
                     <div class="item">
                         <img src="images/sandwich.jpeg" alt="Perro Caliente Sencillo">
-                        <h3>Perro Caliente Sencillo - $20</h3>
+                        <h3>Hot Dog Sencillo - $20</h3>
                         <p>Salchicha de pavo, cátsup, mayonesa</p>
                         <div class="order-controls">
                             <button class="order-now-btn" data-name="Perro Caliente Sencillo" data-price="20">Ordena Ahora</button>
@@ -913,7 +913,7 @@
                     </div>
                     <div class="item">
                         <img src="images/sandwich.jpeg" alt="Perro Caliente Chingón">
-                        <h3>Perro Caliente Chingón - $35</h3>
+                        <h3>Hot Dog Chingón - $35</h3>
                         <p>Salchicha de pavo, tocino, queso Oaxaca, piña, jitomate, cátsup, mayonesa, picante (salsa macha)</p>
                         <div class="order-controls">
                             <button class="order-now-btn" data-name="Perro Caliente Chingón" data-price="35">Ordena Ahora</button>
@@ -1012,7 +1012,7 @@
         </div>
 
         <section id="whatsapp">
-            <h2>Échate un clavado al Whats</h2>
+            <h2>Únete a nuestro grupo de Whats</h2>
             <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
             <a href="https://wa.me/1234567890" class="btn btn-whatsapp">Cáele al WhatsApp</a>
         </section>
@@ -1020,22 +1020,22 @@
         <section id="qr-code">
             <h2>Escanea pa’l pedido</h2>
             <img src="images/QR.png" alt="Código QR" width="150">
-            <p>¡Pásale el link a la banda!</p>
+            <p>¡Comparte el link y obten recompensas y descuentos exclusivos!</p>
         </section>
 
         <button id="order-btn" class="order-btn" disabled>Ordenar tu pedido</button>
     </main>
 
     <footer>
-        <p>© 2025 Tortas de la Mimi | Naucalpan de Juárez, puro amor mexicano</p>
+        <p>© 2025 Tortas de la Mimi y el Lalo | Naucalpan de Juárez, del barrio para el barrio</p>
     </footer>
 
     <!-- Order Preview Modal -->
     <div id="order-preview-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <h2>Tu Bolsita de Lonche</h2>
-            <div id="preview-items">Aún no hay nada en la bolsita</div>
+            <h2>Tu Orden</h2>
+            <div id="preview-items">Tu pedido está vacío</div>
             <p id="preview-total">Total: $0 MXN</p>
         </div>
     </div>
@@ -1044,13 +1044,13 @@
     <div id="order-form-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <h2>Arma tu pedido</h2>
+            <h2>Completa tu orden</h2>
             <form id="custom-order-form">
                 <label for="parent-name">Tu nombre:</label>
                 <input type="text" id="parent-name" name="entry.1069885003" required placeholder="Ej. Juan Pérez">
 
-                <label for="kid-name">Nombre del pequeño:</label>
-                <input type="text" id="kid-name" name="entry.1194295238" required placeholder="Ej. Pepito">
+                <label for="kid-name">Notas especiales del pedido:</label>
+                <input type="text" id="kid-name" name="entry.1194295238" required placeholder="Ej. Sin picante, ingredientes extras, etc.">
 
                 <label for="pickup-time">Hora de entrega:</label>
                 <select id="pickup-time" name="entry.1139898634" required>
@@ -1074,7 +1074,7 @@
                 </select>
 
                 <div id="bank-details" style="display: none;">
-                    <p>CLABE: 1234-5678-9012-3456 (Banco Chido)</p>
+                    <p>CLABE: 1234-5678-9012-3456 Banco: BBVA, Nombre: Noemí Rojas</p>
                 </div>
 
                 <label for="delivery-location">Lugar de entrega:</label>
@@ -1095,7 +1095,7 @@
                 <input type="hidden" id="items-input" name="entry.174677996">
                 <input type="hidden" id="total-input" name="entry.53053903">
 
-                <button type="submit" class="btn" id="submit-btn">¡Apedir el lonche!</button>
+                <button type="submit" class="btn" id="submit-btn">¡Ordenar Ahora!</button>
             </form>
         </div>
     </div>
@@ -1104,7 +1104,7 @@
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <h2>¡Órale, pedido recibido!</h2>
+            <h2>¡Muchas gracias!, Tu pedido está siendo preparado!</h2>
             <p id="modal-message"></p>
         </div>
     </div>
