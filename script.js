@@ -347,10 +347,10 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
 
     const formData = new FormData(form);
     formData.set('entry.1139898634', pickupTime === 'custom' ? customTime : pickupTime);
-    formData.set('entry.1404862194', deliveryDetails);
+    formData.set('entry.1404862194', deliveryLocation === 'En la escuela' ? `Escuela: ${deliveryDetails}` : deliveryDetails);
 
     try {
-        await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
+        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSe4hDHCOU5K4VKxVFiU6aihKpjrU1cK3kRcsr3s-29gty8dyQ/formResponse', {
             method: 'POST',
             body: formData,
             mode: 'no-cors'
@@ -360,6 +360,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
         closeAllModals(true); // Exclude confirmation modal
         openConfirmationModal();
 
+        // Reset order and UI
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
         form.reset();
@@ -368,7 +369,7 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
         document.getElementById('delivery-details').style.display = 'none';
     } catch (error) {
         console.error('Error submitting form:', error);
-        alert('¡Órale! Algo salió mal. Porfa, intenta de nuevo o márcale al Whats.');
+        alert('Algo salió mal. Porfa, intenta de nuevo o márcale al Whats: https://wa.me/1234567890');
     }
 });
 
