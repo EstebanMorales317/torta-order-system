@@ -1,3 +1,5 @@
+let isConfirmationModalOpening = false; // Flag to prevent premature modal closing
+
 const orderItems = {};
 
 const initializeModals = () => {
@@ -136,7 +138,6 @@ document.addEventListener('click', (e) => {
 });
 
 // Toggle between menus
-// Toggle between menus
 document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     const schoolMenu = document.getElementById('school-menu');
     const deliveryMenu = document.getElementById('delivery-menu');
@@ -208,6 +209,10 @@ const openOrderModal = () => {
 const closeAllModals = () => {
     console.log('closeAllModals called', new Error().stack); // Debug log
     document.querySelectorAll('.modal').forEach(modal => {
+        // Skip confirmation modal if it's opening
+        if (modal.id === 'confirmation-modal' && isConfirmationModalOpening) {
+            return;
+        }
         const modalContent = modal.querySelector('.modal-content');
         modalContent.classList.add('closing');
         setTimeout(() => {
@@ -253,6 +258,7 @@ document.querySelectorAll('.close').forEach(closeBtn => {
 });
 
 window.addEventListener('click', (e) => {
+    console.log('Window click:', e.target); // Debug click events
     // Ignore clicks from bolsita, order-btn, or their children
     if (e.target.closest('#bolsita') || e.target.closest('#order-btn')) return;
     // Check if click is on modal background
@@ -264,6 +270,7 @@ window.addEventListener('click', (e) => {
         }
     }
 });
+
 // Form handling
 document.getElementById('pickup-time').addEventListener('change', (e) => {
     const customTime = document.getElementById('custom-time');
@@ -314,19 +321,25 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
         });
 
         closeAllModals(); // Close all modals before showing confirmation
+        isConfirmationModalOpening = true; // Set flag
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalContent = confirmationModal.querySelector('.modal-content');
         modalContent.classList.remove('closing');
-        document.getElementById('modal-message').textContent = `¡Échale! Tu pedido pa’l lonche ya está en camino 🌮. Te llegará un mensaje por WhatsApp pa’ confirmar.`;
         confirmationModal.style.display = 'flex';
         confirmationModal.style.opacity = '1';
         confirmationModal.classList.add('active');
 
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        // Confetti commented out for testing; uncomment after confirming modal stability
+        // confetti({
+        //     particleCount: 100,
+        //     spread: 70,
+        //     origin: { y: 0.6 }
+        // });
+
+        // Reset flag after 1-second buffer
+        setTimeout(() => {
+            isConfirmationModalOpening = false;
+        }, 1000);
 
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
