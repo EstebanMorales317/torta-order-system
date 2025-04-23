@@ -252,17 +252,17 @@ document.querySelectorAll('.close').forEach(closeBtn => {
 });
 
 window.addEventListener('click', (e) => {
-    // Ignore clicks originating from bolsita, order-btn, or their children
+    // Ignore clicks from bolsita, order-btn, or their children
     if (e.target.closest('#bolsita') || e.target.closest('#order-btn')) return;
-    // Only close if clicking on modal background, not inside modal-content
-    if (e.target.classList.contains('modal')) {
-        const modalContent = e.target.querySelector('.modal-content');
-        if (!modalContent.contains(e.target)) {
+    // Check if click is on modal background
+    const modal = e.target.closest('.modal');
+    if (modal) {
+        const modalContent = modal.querySelector('.modal-content');
+        if (e.target === modal && !modalContent.contains(e.target)) {
             closeAllModals();
         }
     }
 });
-
 // Form handling
 document.getElementById('pickup-time').addEventListener('change', (e) => {
     const customTime = document.getElementById('custom-time');
