@@ -1,9 +1,6 @@
-let isConfirmationModalOpening = false; // Flag to prevent premature modal closing
-
 const orderItems = {};
 
 const initializeModals = () => {
-    // Hide all modals on page load
     document.querySelectorAll('.modal').forEach(modal => {
         modal.style.display = 'none';
         modal.style.opacity = '0';
@@ -24,7 +21,6 @@ const updateBolsita = () => {
     let total = 0;
     const items = [];
 
-    // Update UI for each item
     document.querySelectorAll('.item').forEach(item => {
         const baseName = item.querySelector('.order-now-btn').getAttribute('data-name');
         const flavorSelect = item.querySelector('.flavor-select');
@@ -44,7 +40,6 @@ const updateBolsita = () => {
         }
     });
 
-    // Aggregate items
     Object.keys(orderItems).forEach(name => {
         const qty = orderItems[name].quantity;
         if (qty > 0) {
@@ -55,11 +50,9 @@ const updateBolsita = () => {
         }
     });
 
-    // Update bolsita badge
     bolsitaCount.textContent = count;
     bolsitaTotal.textContent = `$${total}`;
 
-    // Update preview modal
     if (items.length) {
         previewItems.innerHTML = items.map(item => `
             <div class="item-row">
@@ -75,12 +68,10 @@ const updateBolsita = () => {
     }
     document.getElementById('preview-total').textContent = `Total: $${total} MXN`;
 
-    // Update order button state
     orderBtn.disabled = count === 0;
     orderBtn.style.background = count > 0 ? 'linear-gradient(45deg, #e74c3c, #f1c40f)' : '#7f8c8d';
     orderBtn.style.cursor = count > 0 ? 'pointer' : 'not-allowed';
 
-    // Animate bolsita
     if (count > 0) {
         const bolsita = document.getElementById('bolsita');
         bolsita.classList.add('pulse');
@@ -90,7 +81,6 @@ const updateBolsita = () => {
     return items.map(item => `${item.name} ($${item.price}) x${item.qty}`);
 };
 
-// Handle "Ordena Ahora" button clicks
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('order-now-btn')) {
         const item = e.target.closest('.item');
@@ -110,17 +100,13 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Handle quantity buttons
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('qty-btn')) {
         const item = e.target.closest('.item') || e.target.closest('.item-row');
         const baseName = e.target.getAttribute('data-name');
         const isPlus = e.target.classList.contains('plus');
-        
-        // For modal quantity controls, use the exact name
         let fullName = baseName;
-        
-        // For item quantity controls, check for flavor
+
         if (item.classList.contains('item')) {
             const flavorSelect = item.querySelector('.flavor-select');
             const flavor = flavorSelect && flavorSelect.value ? ` (${flavorSelect.value})` : '';
@@ -137,7 +123,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Toggle between menus
 document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     const schoolMenu = document.getElementById('school-menu');
     const deliveryMenu = document.getElementById('delivery-menu');
@@ -145,11 +130,9 @@ document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     const deliveryLabel = document.getElementById('delivery-label');
     const body = document.body;
 
-    // Remove active class from both initially
     schoolMenu.classList.remove('active');
     deliveryMenu.classList.remove('active');
 
-    // Update display and active class
     if (e.target.checked) {
         schoolMenu.style.display = 'none';
         deliveryMenu.style.display = 'block';
@@ -168,7 +151,6 @@ document.getElementById('delivery-toggle').addEventListener('change', (e) => {
     updateBolsita();
 });
 
-// Flavor selection
 document.querySelectorAll('.flavor-select').forEach(select => {
     select.addEventListener('change', (e) => {
         const item = e.target.closest('.item');
@@ -189,29 +171,27 @@ document.querySelectorAll('.flavor-select').forEach(select => {
     });
 });
 
-// Modal handling
 const openOrderModal = () => {
     if (Object.keys(orderItems).length === 0) return;
     const modal = document.getElementById('order-form-modal');
     const modalContent = modal.querySelector('.modal-content');
-    if (modal.classList.contains('active')) return; // Prevent re-opening if already open
+    if (modal.classList.contains('active')) return;
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
     setTimeout(() => {
         modal.style.opacity = '1';
         modal.classList.add('active');
-    }, 10); // Slight delay to ensure display is set
+    }, 10);
     const items = updateBolsita();
     document.getElementById('items-input').value = items.join(', ');
     document.getElementById('total-input').value = document.getElementById('preview-total').textContent.replace('Total: $', '').replace(' MXN', '');
 };
 
-const closeAllModals = () => {
-    console.log('closeAllModals called', new Error().stack); // Debug log
+const closeAllModals = (excludeConfirmation = false) => {
+    console.log('closeAllModals called, excludeConfirmation:', excludeConfirmation);
     document.querySelectorAll('.modal').forEach(modal => {
-        // Skip confirmation modal if it's opening
-        if (modal.id === 'confirmation-modal' && isConfirmationModalOpening) {
-            console.log('Skipping confirmation modal close due to isConfirmationModalOpening'); // Debug
+        if (excludeConfirmation && modal.id === 'confirmation-modal') {
+            console.log('Skipping confirmation modal');
             return;
         }
         const modalContent = modal.querySelector('.modal-content');
@@ -228,18 +208,17 @@ const closeAllModals = () => {
 const openBolsitaModal = () => {
     const modal = document.getElementById('order-preview-modal');
     const modalContent = modal.querySelector('.modal-content');
-    if (modal.classList.contains('active')) return; // Prevent re-opening if already open
+    if (modal.classList.contains('active')) return;
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
     setTimeout(() => {
         modal.style.opacity = '1';
         modal.classList.add('active');
-    }, 10); // Slight delay to ensure display is set
+    }, 10);
 };
 
 const openConfirmationModal = () => {
-    console.log('Opening confirmation modal'); // Debug
-    isConfirmationModalOpening = true;
+    console.log('Opening confirmation modal');
     const modal = document.getElementById('confirmation-modal');
     const modalContent = modal.querySelector('.modal-content');
     modalContent.classList.remove('closing');
@@ -247,28 +226,28 @@ const openConfirmationModal = () => {
     setTimeout(() => {
         modal.style.opacity = '1';
         modal.classList.add('active');
-        // Trigger confetti
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        try {
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                zIndex: 998
+            });
+            console.log('Confetti triggered');
+        } catch (error) {
+            console.error('Confetti failed:', error);
+        }
     }, 10);
-    // Extend flag reset to ensure modal stays open
-    setTimeout(() => {
-        console.log('Resetting isConfirmationModalOpening flag'); // Debug
-        isConfirmationModalOpening = false;
-    }, 2000); // Increased to 2 seconds
 };
 
 document.getElementById('bolsita').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event bubbling
-    e.preventDefault(); // Prevent any default behavior
+    e.stopPropagation();
+    e.preventDefault();
     openBolsitaModal();
 });
 
 document.getElementById('order-btn').addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent event bubbling
+    e.stopPropagation();
     e.preventDefault();
     if (!document.getElementById('order-btn').disabled) {
         openOrderModal();
@@ -277,16 +256,14 @@ document.getElementById('order-btn').addEventListener('click', (e) => {
 
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent bubbling
+        e.stopPropagation();
         closeAllModals();
     });
 });
 
 window.addEventListener('click', (e) => {
-    console.log('Window click:', e.target); // Debug click events
-    // Ignore clicks from bolsita, order-btn, or their children
+    console.log('Window click:', e.target);
     if (e.target.closest('#bolsita') || e.target.closest('#order-btn')) return;
-    // Check if click is on modal background
     const modal = e.target.closest('.modal');
     if (modal) {
         const modalContent = modal.querySelector('.modal-content');
@@ -296,7 +273,6 @@ window.addEventListener('click', (e) => {
     }
 });
 
-// Form handling
 document.getElementById('pickup-time').addEventListener('change', (e) => {
     const customTime = document.getElementById('custom-time');
     customTime.style.display = e.target.value === 'custom' ? 'block' : 'none';
@@ -328,7 +304,7 @@ document.getElementById('delivery-location').addEventListener('change', (e) => {
 
 document.getElementById('custom-order-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('Form submitted'); // Debug
+    console.log('Form submitted');
     const form = e.target;
     const pickupTime = document.getElementById('pickup-time').value;
     const customTime = document.getElementById('custom-time-input').value;
@@ -346,9 +322,9 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             mode: 'no-cors'
         });
 
-        console.log('Form submission successful, closing other modals'); // Debug
-        closeAllModals(); // Close all modals before showing confirmation
-        openConfirmationModal(); // Open confirmation modal with confetti
+        console.log('Form submission successful');
+        closeAllModals(true); // Exclude confirmation modal
+        openConfirmationModal();
 
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
@@ -362,9 +338,8 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
     }
 });
 
-// Initialize modals on page load
 document.addEventListener('DOMContentLoaded', () => {
     initializeModals();
     updateBolsita();
-    document.getElementById('school-menu').classList.add('active'); // Set initial active menu
+    document.getElementById('school-menu').classList.add('active');
 });
