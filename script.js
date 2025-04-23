@@ -219,7 +219,7 @@ const openBolsitaModal = () => {
 
 const openConfirmationModal = () => {
     console.log('Opening confirmation modal');
-    const modal = achterElement('confirmation-modal');
+    const modal = document.getElementById('confirmation-modal');
     const modalContent = modal.querySelector('.modal-content');
     const orderedItemsList = document.getElementById('ordered-items-list');
     const orderTotal = document.getElementById('order-total');
