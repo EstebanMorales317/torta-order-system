@@ -211,14 +211,15 @@ const closeAllModals = () => {
     document.querySelectorAll('.modal').forEach(modal => {
         // Skip confirmation modal if it's opening
         if (modal.id === 'confirmation-modal' && isConfirmationModalOpening) {
+            console.log('Skipping confirmation modal close due to isConfirmationModalOpening'); // Debug
             return;
         }
         const modalContent = modal.querySelector('.modal-content');
         modalContent.classList.add('closing');
+        modal.style.opacity = '0';
+        modal.classList.remove('active');
         setTimeout(() => {
             modal.style.display = 'none';
-            modal.style.opacity = '0';
-            modal.classList.remove('active');
             modalContent.classList.remove('closing');
         }, 300);
     });
@@ -234,6 +235,30 @@ const openBolsitaModal = () => {
         modal.style.opacity = '1';
         modal.classList.add('active');
     }, 10); // Slight delay to ensure display is set
+};
+
+const openConfirmationModal = () => {
+    console.log('Opening confirmation modal'); // Debug
+    isConfirmationModalOpening = true;
+    const modal = document.getElementById('confirmation-modal');
+    const modalContent = modal.querySelector('.modal-content');
+    modalContent.classList.remove('closing');
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.classList.add('active');
+        // Trigger confetti
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }, 10);
+    // Extend flag reset to ensure modal stays open
+    setTimeout(() => {
+        console.log('Resetting isConfirmationModalOpening flag'); // Debug
+        isConfirmationModalOpening = false;
+    }, 2000); // Increased to 2 seconds
 };
 
 document.getElementById('bolsita').addEventListener('click', (e) => {
@@ -303,6 +328,7 @@ document.getElementById('delivery-location').addEventListener('change', (e) => {
 
 document.getElementById('custom-order-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('Form submitted'); // Debug
     const form = e.target;
     const pickupTime = document.getElementById('pickup-time').value;
     const customTime = document.getElementById('custom-time-input').value;
@@ -320,26 +346,9 @@ document.getElementById('custom-order-form').addEventListener('submit', async (e
             mode: 'no-cors'
         });
 
+        console.log('Form submission successful, closing other modals'); // Debug
         closeAllModals(); // Close all modals before showing confirmation
-        isConfirmationModalOpening = true; // Set flag
-        const confirmationModal = document.getElementById('confirmation-modal');
-        const modalContent = confirmationModal.querySelector('.modal-content');
-        modalContent.classList.remove('closing');
-        confirmationModal.style.display = 'flex';
-        confirmationModal.style.opacity = '1';
-        confirmationModal.classList.add('active');
-
-        // Confetti commented out for testing; uncomment after confirming modal stability
-        // confetti({
-        //     particleCount: 100,
-        //     spread: 70,
-        //     origin: { y: 0.6 }
-        // });
-
-        // Reset flag after 1-second buffer
-        setTimeout(() => {
-            isConfirmationModalOpening = false;
-        }, 1000);
+        openConfirmationModal(); // Open confirmation modal with confetti
 
         Object.keys(orderItems).forEach(key => delete orderItems[key]);
         updateBolsita();
