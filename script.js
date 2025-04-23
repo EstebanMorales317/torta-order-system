@@ -221,6 +221,31 @@ const openConfirmationModal = () => {
     console.log('Opening confirmation modal');
     const modal = document.getElementById('confirmation-modal');
     const modalContent = modal.querySelector('.modal-content');
+    const orderedItemsList = document.getElementById('ordered-items-list');
+
+    // Clear previous items
+    orderedItemsList.innerHTML = '';
+
+    // Populate ordered items
+    Object.keys(orderItems).forEach(name => {
+        const qty = orderItems[name].quantity;
+        if (qty > 0) {
+            const price = orderItems[name].price;
+            const li = document.createElement('li');
+            li.className = 'ordered-item';
+            li.innerHTML = `
+                <span class="item-name">${name}</span>
+                <span class="item-details">x${qty} ($${price * qty})</span>
+            `;
+            orderedItemsList.appendChild(li);
+        }
+    });
+
+    // If no items, show a fallback message
+    if (!orderedItemsList.hasChildNodes()) {
+        orderedItemsList.innerHTML = '<li class="no-items">No hay elementos en el pedido.</li>';
+    }
+
     modalContent.classList.remove('closing');
     modal.style.display = 'flex';
     setTimeout(() => {
