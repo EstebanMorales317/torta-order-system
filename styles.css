@@ -18,6 +18,14 @@ body.delivery-mode {
     background: #d3d3d3; /* Darker gray for delivery mode */
 }
 
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998; /* Below modals (999 and 1001) */
+    pointer-events: none; /* Prevent click interference */
+}
+
 header {
     text-align: center;
     padding: 15px;
