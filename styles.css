@@ -584,3 +584,109 @@ footer {
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
     }
 }
+
+
+/* Ordered Items Container */
+.ordered-items-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease forwards;
+}
+
+.ordered-items-container h3 {
+    font-size: 1.4em;
+    color: #e74c3c;
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+#ordered-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ordered-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1em;
+    color: #333;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInItem 0.3s ease forwards;
+    animation-delay: calc(0.1s * var(--item-index));
+}
+
+.ordered-item:last-child {
+    border-bottom: none;
+}
+
+/* Dynamic animation delay for each item */
+.ordered-item:nth-child(1) { --item-index: 1; }
+.ordered-item:nth-child(2) { --item-index: 2; }
+.ordered-item:nth-child(3) { --item-index: 3; }
+.ordered-item:nth-child(4) { --item-index: 4; }
+.ordered-item:nth-child(5) { --item-index: 5; }
+/* Add more as needed for larger orders */
+
+.item-name {
+    font-weight: 600;
+    color: #2ecc71;
+}
+
+.item-details {
+    font-weight: 400;
+    color: #7f8c8d;
+}
+
+.no-items {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* Animation for container */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for list items */
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ordered-items-container {
+        padding: 10px;
+    }
+
+    .ordered-items-container h3 {
+        font-size: 1.2em;
+    }
+
+    .ordered-item {
+        font-size: 0.9em;
+        padding: 8px 0;
+    }
+}
