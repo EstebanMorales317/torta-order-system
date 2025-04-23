@@ -219,20 +219,24 @@ const openBolsitaModal = () => {
 
 const openConfirmationModal = () => {
     console.log('Opening confirmation modal');
-    const modal = document.getElementById('confirmation-modal');
+    const modal = achterElement('confirmation-modal');
     const modalContent = modal.querySelector('.modal-content');
     const orderedItemsList = document.getElementById('ordered-items-list');
+    const orderTotal = document.getElementById('order-total');
 
     // Clear previous items
     orderedItemsList.innerHTML = '';
 
     // Populate ordered items
-    Object.keys(orderItems).forEach(name => {
+    let total = 0;
+    Object.keys(orderItems).forEach((name, index) => {
         const qty = orderItems[name].quantity;
         if (qty > 0) {
             const price = orderItems[name].price;
+            total += qty * price;
             const li = document.createElement('li');
             li.className = 'ordered-item';
+            li.style.setProperty('--item-index', index + 1);
             li.innerHTML = `
                 <span class="item-name">${name}</span>
                 <span class="item-details">x${qty} ($${price * qty})</span>
@@ -241,9 +245,13 @@ const openConfirmationModal = () => {
         }
     });
 
+    // Display total
+    orderTotal.textContent = `Total: $${total} MXN`;
+
     // If no items, show a fallback message
     if (!orderedItemsList.hasChildNodes()) {
         orderedItemsList.innerHTML = '<li class="no-items">No hay elementos en el pedido.</li>';
+        orderTotal.textContent = '';
     }
 
     modalContent.classList.remove('closing');
@@ -256,7 +264,8 @@ const openConfirmationModal = () => {
                 particleCount: 150,
                 spread: 80,
                 origin: { y: 0.6 },
-                zIndex: 998
+                zIndex: 998,
+                colors: ['#e74c3c', '#2ecc71', '#f1c40f']
             });
             console.log('Confetti triggered');
         } catch (error) {
