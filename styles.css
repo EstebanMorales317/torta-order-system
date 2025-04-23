@@ -675,6 +675,117 @@ footer {
     }
 }
 
+/* Ordered Items Container */
+.ordered-items-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease forwards;
+}
+
+.ordered-items-container h3 {
+    font-size: 1.4em;
+    color: #d32f2f;
+    margin: 0 0 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+#ordered-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ordered-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ffebee;
+    font-size: 1em;
+    color: #333;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInItem 0.3s ease forwards;
+    animation-delay: calc(0.1s * var(--item-index));
+}
+
+.ordered-item:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #2ecc71;
+}
+
+.item-details {
+    font-weight: 400;
+    color: #388e3c;
+}
+
+.no-items {
+    text-align: center;
+    color: #388e3c;
+    font-style: italic;
+}
+
+.order-total {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #d32f2f;
+    text-align: right;
+    margin-top: 15px;
+    animation: fadeInTotal 0.5s ease forwards;
+}
+
+/* Confirmation Modal Specific Styles */
+#confirmation-modal .modal-content h2 {
+    color: #d32f2f;
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Animation for container */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for list items */
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation for total */
+@keyframes fadeInTotal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .ordered-items-container {
@@ -688,5 +799,13 @@ footer {
     .ordered-item {
         font-size: 0.9em;
         padding: 8px 0;
+    }
+
+    .order-total {
+        font-size: 1.1em;
+    }
+
+    #confirmation-modal .modal-content h2 {
+        font-size: 1.5em;
     }
 }
