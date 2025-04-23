@@ -206,6 +206,7 @@ const openOrderModal = () => {
 };
 
 const closeAllModals = () => {
+    console.log('closeAllModals called', new Error().stack); // Debug log
     document.querySelectorAll('.modal').forEach(modal => {
         const modalContent = modal.querySelector('.modal-content');
         modalContent.classList.add('closing');
