@@ -1286,14 +1286,18 @@
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>¡Muchas gracias!, Tu pedido está siendo preparado!</h2>
-            <p id="modal-message"></p>
+   <!-- Confirmation Modal -->
+<div id="confirmation-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2>¡Muchas gracias!, Tu pedido está siendo preparado!</h2>
+        <div id="ordered-items" class="ordered-items-container">
+            <h3>Tu pedido incluye:</h3>
+            <ul id="ordered-items-list"></ul>
         </div>
+        <p id="modal-message"></p>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
