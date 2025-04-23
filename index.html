@@ -848,37 +848,353 @@
             </section>
         </div>
 
-       <section id="delivery-breakfast" class="menu-section">
-    <h2>Desayunos</h2>
-    <div class="menu-scroll">
-        <div class="item">
-            <img src="images/fruta.jpeg" alt="Mini hot-cakes">
-            <h3>Mini hot-cakes - $20</h3>
-            <p>Calientitos, esponjosos y suavecitos</p>
-            <div class="order-controls">
-                <button class="order-now-btn" data-name="Mini hot-cakes" data-price="20">Ordena Ahora</button>
-                <div class="quantity-controls" style="display: none;">
-                    <button class="qty-btn minus" data-name="Mini hot-cakes">-</button>
-                    <span class="qty-display">1</span>
-                    <button class="qty-btn plus" data-name="Mini hot-cakes">+</button>
+<!-- Delivery Menu -->
+<div id="delivery-menu" class="menu-container" style="display: none;">
+    <section id="delivery-breakfast" class="menu-section">
+        <h2>Desayunos</h2>
+        <div class="menu-scroll">
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Mini hot-cakes">
+                <h3>Mini hot-cakes - $20</h3>
+                <p>Calientitos, esponjosos y suavecitos</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Mini hot-cakes" data-price="20">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Mini hot-cakes">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Mini hot-cakes">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Hot-Cakes grandes">
+                <h3>Hot-Cakes grandes - $35</h3>
+                <p>3 piezas de Hot-Cakes grandes y calientitos, para el antojo de "algo dulcesito"</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Hot-Cakes grandes" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Hot-Cakes grandes">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Hot-Cakes grandes">+</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="item">
-            <img src="images/fruta.jpeg" alt="Hot-Cakes grandes">
-            <h3>Hot-Cakes grandes - $35</h3>
-            <p>3 piezas de Hot-Cakes grandes y calientitos, para el antojo de "algo dulcesito"</p>
-            <div class="order-controls">
-                <button class="order-now-btn" data-name="Hot-Cakes grandes" data-price="35">Ordena Ahora</button>
-                <div class="quantity-controls" style="display: none;">
-                    <button class="qty-btn minus" data-name="Hot-Cakes grandes">-</button>
-                    <span class="qty-display">1</span>
-                    <button class="qty-btn plus" data-name="Hot-Cakes grandes">+</button>
+    </section>
+
+    <section id="delivery-meals" class="menu-section">
+        <h2>Tortas Chingonas</h2>
+        <div class="menu-scroll">
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta de Milanesa">
+                <h3>Torta de Milanesa - $35</h3>
+                <p>Milanesa de pollo, queso Oaxaca, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta de Milanesa" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta de Milanesa">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta de Milanesa">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta Completa de Jamón">
+                <h3>Torta Completa de Jamón - $30</h3>
+                <p>Jamón de pierna, queso Oaxaca, frijoles refritos, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta Completa de Jamón" data-price="30">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta Completa de Jamón">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta Completa de Jamón">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta Completa de Salchicha">
+                <h3>Torta Completa de Salchicha - $35</h3>
+                <p>Salchicha de pavo, frijoles refritos, queso Oaxaca, aguacate, jitomate, lechuga italiana, picante (chiles en vinagre o chipotle), mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta Completa de Salchicha" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta Completa de Salchicha">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta Completa de Salchicha">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/cuerno.jpeg" alt="Cuernito Grande">
+                <h3>Cuernito Grande - $35</h3>
+                <p>Jamón de pierna, queso blanco, queso amarillo, aguacate, jitomate, lechuga italiana</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Cuernito Grande" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Cuernito Grande">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Cuernito Grande">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta Especial">
+                <h3>Torta Especial - $55</h3>
+                <p>Pechuga de pollo empanizada, frijoles refritos, salchicha de pavo, huevo, jamón de pierna, aguacate, jitomate, lechuga, queso Oaxaca, picante (chiles en vinagre, chipotle o salsa macha), mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta Especial" data-price="55">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta Especial">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta Especial">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta de Huevo">
+                <h3>Torta de Huevo - $35</h3>
+                <p>Huevo, frijoles refritos, queso Oaxaca, jitomate, lechuga, aguacate, picante (chiles en vinagre, chipotle o salsa macha), mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta de Huevo" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta de Huevo">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta de Huevo">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/torta.jpeg" alt="Torta de Pierna">
+                <h3>Torta de Pierna - $35</h3>
+                <p>Jamón de pierna, queso Oaxaca, jitomate, aguacate, frijoles refritos, lechuga italiana</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Torta de Pierna" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Torta de Pierna">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Torta de Pierna">+</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section id="delivery-sincronizadas" class="menu-section">
+        <h2>Sincronizadas y Hot Dogs</h2>
+        <div class="menu-scroll">
+            <div class="item">
+                <img src="images/sandwich.jpeg" alt="Sincronizada Sencilla">
+                <h3>Sincronizada Sencilla - $25</h3>
+                <p>2 piezas: tortilla de harina, jamón de pierna, queso Oaxaca, queso amarillo, cátsup, mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Sincronizada Sencilla" data-price="25">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Sincronizada Sencilla">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Sincronizada Sencilla">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/sandwich.jpeg" alt="Sincronizada Grande">
+                <h3>Sincronizada Grande - $35</h3>
+                <p>2 tortillas de harina, jamón de pierna, queso Oaxaca, queso amarillo, jitomate, piña, cebolla, cátsup, mayonesa, picante (salsa macha)</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Sincronizada Grande" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Sincronizada Grande">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Sincronizada Grande">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/sandwich.jpeg" alt="Perro Caliente Sencillo">
+                <h3>Hot Dog Sencillo - $20</h3>
+                <p>Salchicha de pavo, cátsup, mayonesa</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Perro Caliente Sencillo" data-price="20">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Perro Caliente Sencillo">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Perro Caliente Sencillo">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/sandwich.jpeg" alt="Perro Caliente Chingón">
+                <h3>Hot Dog Chingón - $35</h3>
+                <p>Salchicha de pavo, tocino, queso Oaxaca, piña, jitomate, cátsup, mayonesa, picante (salsa macha)</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Perro Caliente Chingón" data-price="35">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Perro Caliente Chingón">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Perro Caliente Chingón">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="delivery-desserts" class="menu-section">
+        <h2>Postres y Frutas</h2>
+        <div class="menu-scroll">
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Coctel de frutas mediano">
+                <h3>Coctel de frutas mediano - $55</h3>
+                <p>Mezcla de frutas de temporada</p>
+                <select class="flavor-select" data-name="Coctel de frutas mediano" data-price="55">
+                    <option value="">Elige opción</option>
+                    <option value="Con miguelito y limón">Con miguelito y limón</option>
+                    <option value="Natural">Natural</option>
+                </select>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Coctel de frutas mediano" data-price="55">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Coctel de frutas mediano">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Coctel de frutas mediano">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Coctel de frutas jumbo">
+                <h3>Coctel de frutas jumbo - $70</h3>
+                <p>Mezcla de frutas de temporada</p>
+                <select class="flavor-select" data-name="Coctel de frutas jumbo" data-price="70">
+                    <option value="">Elige opción</option>
+                    <option value="Con miguelito y limón">Con miguelito y limón</option>
+                    <option value="Natural">Natural</option>
+                </select>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Coctel de frutas jumbo" data-price="70">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Coctel de frutas jumbo">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Coctel de frutas jumbo">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Coctel de frutas dulcecito mediano">
+                <h3>Coctel de frutas dulcecito mediano - $55</h3>
+                <p>Mezcla de frutas de temporada con chantilly o yogurt</p>
+                <select class="flavor-select" data-name="Coctel de frutas dulcecito mediano" data-price="55">
+                    <option value="">Elige opción</option>
+                    <option value="Con chantilly y granola">Con chantilly y granola</option>
+                    <option value="Con yogurt">Con yogurt</option>
+                </select>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Coctel de frutas dulcecito mediano" data-price="55">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Coctel de frutas dulcecito mediano">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Coctel de frutas dulcecito mediano">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/fruta.jpeg" alt="Coctel de frutas dulcecito jumbo">
+                <h3>Coctel de frutas dulcecito jumbo - $70</h3>
+                <p>Mezcla de frutas de temporada con chantilly/yogurt y granola</p>
+                <select class="flavor-select" data-name="Coctel de frutas dulcecito jumbo" data-price="70">
+                    <option value="">Elige opción</option>
+                    <option value="Con chantilly y granola">Con chantilly y granola</option>
+                    <option value="Con yogurt">Con yogurt</option>
+                </select>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Coctel de frutas dulcecito jumbo" data-price="70">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Coctel de frutas dulcecito jumbo">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Coctel de frutas dulcecito jumbo">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/flan.jpeg" alt="Flan Casero">
+                <h3>Flan Casero - $15</h3>
+                <p>Flan casero, cremosito con caramelo</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Flan Casero" data-price="15">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Flan Casero">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Flan Casero">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/gelatina.jpeg" alt="Gelatina Casera">
+                <h3>Gelatina Casera - $15</h3>
+                <p>Gelatina de leche combinada con gelatina de agua y frutas</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Gelatina Casera" data-price="15">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Gelatina Casera">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Gelatina Casera">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="delivery-drinks" class="menu-section">
+        <h2>Bebidas Frescas</h2>
+        <div class="menu-scroll">
+            <div class="item">
+                <img src="images/agua.jpeg" alt="Agua Bonafont 1L">
+                <h3>Agua Bonafont 1L - $15</h3>
+                <p>Agua natural, 1 litro, bien fría</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Agua Bonafont 1L" data-price="15">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Agua Bonafont 1L">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Agua Bonafont 1L">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/agua.jpeg" alt="Aguafiel de Sabor">
+                <h3>Aguafiel de Sabor 500ml - $12</h3>
+                <p>Agua saborizada, 500ml</p>
+                <select class="flavor-select" data-name="Aguafiel de Sabor 500ml" data-price="12">
+                    <option value="">Elige sabor</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Naranja">Naranja</option>
+                    <option value="Limón">Limón</option>
+                </select>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Aguafiel de Sabor 500ml" data-price="12">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Aguafiel de Sabor 500ml">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Aguafiel de Sabor 500ml">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="images/jugo.jpg" alt="Jugo Boing 1L">
+                <h3>Jugo Boing 1L - $29</h3>
+                <p>Jugo de fruta, 1 litro, pa’l antojo</p>
+                <div class="order-controls">
+                    <button class="order-now-btn" data-name="Jugo Boing 1L" data-price="29">Ordena Ahora</button>
+                    <div class="quantity-controls" style="display: none;">
+                        <button class="qty-btn minus" data-name="Jugo Boing 1L">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" data-name="Jugo Boing 1L">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+        
         <section id="whatsapp">
             <h2>Únete a nuestro grupo de Whats</h2>
             <p>¿Dudas o quieres algo especial? ¡Cáele al grupo!</p>
